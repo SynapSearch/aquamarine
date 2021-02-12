@@ -1,0 +1,21 @@
+{% extends 'base.html' %} {% block content %}{% load static %}
+<body>
+
+    {% if request.user.is_authenticated %}
+        Hello {{user.username}} !
+        {% if request.user.userprofile.is_recruiter %}
+            I see that you are a recruiter!
+        {% else %}
+            I see that you are a student!
+        {% endif %}
+        <a href="{% url 'logout' %}" class="text-font">Logout</a>
+    {% else %}
+
+    <a href="{% url 'signup' %}" class="text-font">Signup</a>
+    <a href="{% url 'login' %}" class="text-font">Login</a>
+    {% endif %}
+
+
+</body>
+
+{% endblock content %}
