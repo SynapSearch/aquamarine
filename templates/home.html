@@ -2,7 +2,7 @@
 <body>
 
     {% if request.user.is_authenticated %}
-        Hello {{user.email}} !
+        Hello {{user.username}} !
         {% if request.user.is_recruiter %}
             I see that you are a recruiter!
         {% else %}

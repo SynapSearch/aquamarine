@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from ..models import UserProfile, RecruiterProfile, StudentProfile
+from ..models import UserProfile
 from ..forms import UserSignupForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
@@ -23,13 +23,7 @@ def signup(request, *args, **kargs):
         if 'signupbutton' in request.POST:
             form = UserSignupForm(request.POST)
             if form.is_valid():
-                user = form.save(commit=False)
-                if user.is_recruiter:
-                    profile = RecruiterProfile.objects.create(user=user)
-                else:
-                    profile = StudentProfile.objects.create(user=user)
-                user.save(commit=True)
-                profile.save()
+                user = form.save()
                 login(request, user)
                 return redirect('browse')
         elif 'loginbutton' in request.POST:
@@ -40,7 +34,6 @@ def signup(request, *args, **kargs):
                 return redirect('browse')
     else:
         form = UserSignupForm()
-
 
     return render(request, 'registration/signup.html', {'form': form})
 
