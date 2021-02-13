@@ -2,8 +2,8 @@
 <body>
 
     {% if request.user.is_authenticated %}
-        Hello {{user.username}} !
-        {% if request.user.userprofile.is_recruiter %}
+        Hello {{user.email}} !
+        {% if request.user.is_recruiter %}
             I see that you are a recruiter!
         {% else %}
             I see that you are a student!
@@ -12,7 +12,6 @@
     {% else %}
 
     <a href="{% url 'signup' %}" class="text-font">Signup</a>
-    <a href="{% url 'login' %}" class="text-font">Login</a>
     {% endif %}
 
 

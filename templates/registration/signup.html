@@ -8,7 +8,7 @@
 <form method="POST" action="" name="form">
     {% csrf_token %}
     <div class="form-group">
-        <input type="text" name="username" placeholder="Email..." class="form-control" required>
+        <input type="text" name="email" placeholder="Email..." class="form-control" required>
     </div>
     <div class="form-group">
         <input type="password" name="password1" placeholder="Password..." class="form-control" required>
@@ -20,9 +20,9 @@
         <label>Account type</label>
         <div class="control">
             <div class="select">
-                <select name="account_type">
-                    <option value="jobseeker" selected>Job seeker</option>
-                    <option value="employer">Employer</option>
+                <select name="is_recruiter">
+                    <option value="False" selected>Student</option>
+                    <option value="True">Employer</option>
                 </select>
             </div>
         </div>
@@ -35,7 +35,7 @@
     <form method="POST" action="" name="form">
         {% csrf_token %}
         <div class="form-group">
-            <input type="text" name="username" placeholder="Email..." class="form-control" required>
+            <input type="text" name="email" placeholder="Email..." class="form-control" required>
         </div>
         <div class="form-group">
             <input type="password" name="password" class="form-control" required>
