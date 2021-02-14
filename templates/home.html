@@ -1,20 +1,285 @@
 {% extends 'base.html' %} {% block content %}{% load static %}
-<body>
 
-    {% if request.user.is_authenticated %}
-        Hello {{user.username}} !
-        {% if request.user.is_recruiter %}
-            I see that you are a recruiter!
-        {% else %}
-            I see that you are a student!
-        {% endif %}
-        <a href="{% url 'logout' %}" class="text-font">Logout</a>
-    {% else %}
+<body id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">Mission Statment</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#projects">About</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#team">Team</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#signup">Contact</a></li>
+            </ul>
+        </div>
+        </div>
+    </nav>
+    <!-- Masthead-->
+    <header class="masthead">
+        <div class="container d-flex h-100 align-items-center">
+            <div class="mx-auto text-center">
+                <h1 class="mx-auto my-0 text-uppercase">SynapSearch</h1>
+                <h2 class="text-white-50 mx-auto mt-2 mb-5">Recruitment with transparency, simplicity, and creativity because we believe you are more than just a piece of paper.</h2>
+                <a class="btn btn-primary" data-target="#loginModal" data-toggle="modal">Log in</a>
+                <a class="btn btn-primary" data-target="#SignupModal" data-toggle="modal">Sign Up</a>
+            </div>
+        </div>
+    </header>
 
-    <a href="{% url 'signup' %}" class="text-font">Signup</a>
-    {% endif %}
+    <!-- About-->
+    <section class="about-section text-center" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2 class="text-white mb-4">Recruiting Made Easy!</h2>
+                    <p class="text-white-50">
+                        We match recruiters with the most qualified applicants. Allow students to showcase soft skills and experiences through a short video in addition to traditional resume information. Showcasing all the attributes a candidate has to offer, beyond their resume.
+                        Additionally, state of the art filtering, provides personalized options for both students and recruiters. This platform offers unique advantages over traditional recruitment websites as it will encourge creativity and a multidimenional
+                        application process.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Progression-->
+    <section class="projects-section bg-light" id="projects">
+        <div class="container">
+
+            <!-- Project One Row-->
+            <div class="row justify-content-center no-gutters mb-5 mb-lg-0">
+                <div class="col-lg-6"><img class="img-fluid" src="{% static 'home/assets/schools.png' %}" alt="" /></div>
+                <div class="col-lg-6">
+                    <div class="bg-black text-center h-100 project">
+                        <div class="d-flex h-100">
+                            <div class="project-text w-100 my-auto text-center text-lg-left">
+                                <h4 class="text-white">By Students For Students</h4>
+                                <p class="mb-0 text-white-50">A tool optimized for student usage, easing the application process. As students extensive understanding of the current proces and features students want were included. With market research, </p>
+                                <hr class="d-none d-lg-block mb-0 ml-0" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Project Two Row-->
+            <div class="row justify-content-center no-gutters">
+                <div class="col-lg-6"><img class="img-fluid" src="{% static 'home/assets/UROP.png' %}" alt="" /></div>
+                <div class="col-lg-6 order-lg-first">
+                    <div class="bg-black text-center h-100 project">
+                        <div class="d-flex h-100">
+                            <div class="project-text w-100 my-auto text-center text-lg-right">
+                                <h4 class="text-white">MIT Undergrad Research Oppertunties Program</h4>
+                                <p class="mb-0 text-white-50">The first step in matching students to oppertunties, specifically focused on undergrad research at MIT. </p>
+                                <hr class="d-none d-lg-block mb-0 mr-0" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Project Three Row-->
+            <div class="row justify-content-center no-gutters mb-5 mb-lg-0">
+                <div class="col-lg-6"><img class="img-fluid" src="{% static 'home/assets/Boston.jpg' %}" alt="" /></div>
+                <div class="col-lg-6">
+                    <div class="bg-black text-center h-100 project">
+                        <div class="d-flex h-100">
+                            <div class="project-text w-100 my-auto text-center text-lg-left">
+                                <h4 class="text-white">Internships</h4>
+                                <p class="mb-0 text-white-50"> Expand into internship space, gathering recruiters from highly saught after companies looking for a high quality applicant pool.</p>
+                                <hr class="d-none d-lg-block mb-0 ml-0" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team-->
+    <section class="page-section bg-dark" id="team">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase text-white">Our Amazing Team</h2>
+                <h3 class="section-subheading text-muted">Supported via the Sandbox Program at MIT</h3>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="team-member">
+                        <img class="mx-auto rounded-circle" src="{% static 'home/assets/Izabella.jpg' %}" alt="" />
+                        <h4 class="text-white">Izabella Zamora</h4>
+                        <p class="text-muted">Lead Designer</p>
+                        <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-linkedin-in"></i></a>
+                        <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="team-member">
+                        <img class="mx-auto rounded-circle" src="{% static 'home/assets/nick.jpg' %}" alt="" />
+                        <h4 class="text-white">Nicholas Deloney</h4>
+                        <p class="text-muted">Lead Marketer</p>
+                        <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-linkedin-in"></i></a>
+                        <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact-->
+    <section class="contact-section bg-black">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card py-4 h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-map-marked-alt text-primary mb-2"></i>
+                            <h4 class="text-uppercase m-0">Address</h4>
+                            <hr class="my-4" />
+                            <div class="small text-black-50">Coming Soon</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card py-4 h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-envelope text-primary mb-2"></i>
+                            <h4 class="text-uppercase m-0">Email</h4>
+                            <hr class="my-4" />
+                            <div class="small text-black-50"><a href="#!">contact@synapsearch.com</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card py-4 h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-mobile-alt text-primary mb-2"></i>
+                            <h4 class="text-uppercase m-0">Phone</h4>
+                            <hr class="my-4" />
+                            <div class="small text-black-50">Coming Soon</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!---<div class="social d-flex justify-content-center">
+                <a class="mx-2" href="#!"><i class="fab fa-twitter"></i></a>
+                <a class="mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
+                <a class="mx-2" href="#!"><i class="fab fa-github"></i></a>
+            </div>-->
+        </div>
+    </section>
+    <!-- Footer-->
+    <footer class="footer bg-black small text-center text-white-50">
+        <div class="container">Copyright © SynapSearch 2020</div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Third party plugin JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+
+
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-title text-center">
+                        <h4>Login</h4>
+                    </div>
+                    <div class="d-flex flex-column text-center">
+                        <form method="POST" name="form">
+                            <div class=" form-group ">
+                                {% csrf_token %}
+                                <input type="text" name="username" placeholder="Username... " class="form-control ">
+                            </div>
+
+                            <div class="form-group ">
+                                <input type="password" name="password" placeholder="Password... " class="form-control ">
+                            </div>
+                    </div>
+                    <div> {{form.errors}}</div>
+                    <button type="submit" name="loginbutton" class="btn btn-info btn-block btn-round ">Log In</button>
+                    </form>
+
+
+                    <div class="text-center text-muted delimiter ">or use a social network</div>
+                    <div class="d-flex justify-content-center social-buttons ">
+                        <button type="button " class="btn btn-secondary btn-round " data-toggle="tooltip " data-placement="top " title="Twitter ">
+                    <i class="fab fa-twitter "></i>
+                  </button>
+                        <button type="button " class="btn btn-secondary btn-round " data-toggle="tooltip " data-placement="top " title="Facebook ">
+                    <i class="fab fa-facebook "></i>
+                  </button>
+                        <button type="button " class="btn btn-secondary btn-round " data-toggle="tooltip " data-placement="top " title="Linkedin ">
+                    <i class="fab fa-linkedin "></i>
+                  </button>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-center ">
+                    <div>Not a member yet? <a data-target="#SignupnModal " data-toggle="modal " class="text-info "> Sign Up</a>.</div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="modal fade " id="SignupModal" tabindex="-1 " role="dialog " aria-labelledby="exampleModalLabel " aria-hidden="true ">
+        <div class="modal-dialog modal-dialog-centered " role="document ">
+            <div class="modal-content ">
+                <div class="modal-header border-bottom-0 ">
+                    <button type="button " class="close " data-dismiss="modal " aria-label="Close ">
+             <span aidden="true ">&times;</span>
+              </button>
+                </div>
+                <div class="modal-body ">
+                    <div class="form-title text-center ">
+                        <h4>Sign Up!</h4>
+                    </div>
+                    <div class="d-flex flex-column text-center ">
+
+                        <form method="POST" action="" name="form">
+                            {% csrf_token %}
+                            <div class="form-group ">
+                                <input type="text" name="username" placeholder="Username... " class="form-control ">
+                            </div>
+                            <div class="form-group ">
+                                <input type="password" name="password1" placeholder="Password... " class="form-control ">
+                            </div>
+                            <div class="form-group ">
+                                <input type="password" name="password2" placeholder="Confirm Password... " class="form-control ">
+                            </div>
+                            <div class="form-group">
+                                <label>Account type</label>
+                                <div class="form-control">
+                                    <div class="select">
+                                        <select name="account_type">
+                                            <option value="jobseeker" selected>Job seeker</option>
+                                            <option value="employer">Employer</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="submit" name="signupbutton" class="btn btn-info btn-block btn-round ">Sign Up</button>
+                        </form>
+                        </div>
+                        {{form.errors}}
+
+                        <div class="modal-footer d-flex justify-content-center ">
+                            <div>
+                                Already have an account?
+                                <a href="{% url 'home' %} " class="text-info ">Login</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 </body>
+
 
 {% endblock content %}

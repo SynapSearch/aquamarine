@@ -1,17 +1,296 @@
-{% extends 'base.html' %} {% block content %}{% load static %}
+{% extends 'swipebase.html' %} {% block content %}
 
-{% if request.user.is_recruiter %}
-<p> Hello recruiter </p>
-<a href="{% url 'editprofile' %}">
-	<button  type="submit" name="createprofilebutton" class="btn btn-info btn-block btn-round">Edit Recruiter Profile</button>
-</a>
-{% else %}
-	<p> Hello student </p>
-{% endif %}
-	<a href="{% url 'logout' %}" class="text-font">Logout</a>
+
+<style>
+    html,
+    .center {
+        margin: auto;
+        text-align: center;
+        width: 100%;
+    }
+    
+    .card {
+        width: auto;
+        height: 700px;
+        background-color: #fff;
+        background: linear-gradient(#f8f8f8, #fff);
+        box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.4);
+        border-radius: 6px;
+        overflow: hidden;
+        position: relative;
+        margin: 1.5rem;
+    }
+    
+    .card h1 {
+        text-align: center;
+    }
+    
+    .card .additional {
+        /* position: right; */
+        width: 44%;
+        height: 100%;
+        background: linear-gradient(#414344, #090a0a);
+        transition: width 0.4s;
+        overflow: hidden;
+        z-index: 2;
+        top: 10;
+    }
+    /* .card:hover .additional {
+        width: 100%;
+        border-radius: 0 5px 5px 0;
+        opacity: 1;
+    } */
+    /* .card:hover .general {
+        opacity: 0;
+    } */
+    
+    .card .additional .user-card {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        float: left;
+        top: 10;
+        text-align: center;
+    }
+    
+    .card .additional .user-card::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 10%;
+        right: -2px;
+        height: 80%;
+        border-left: 2px solid rgba(0, 0, 0, 0.025);
+    }
+    
+    .more-info {
+        width: 44%;
+        float: left;
+        position: relative;
+        left: auto;
+        /* height: 100%; */
+        opacity: 0;
+    }
+    
+    .card .additional h1 {
+        color: #fff;
+        margin-bottom: 0;
+    }
+    
+    .card .additional h3 {
+        color: #fff;
+        margin-bottom: 0;
+    }
+    
+    .card .general {
+        width: 56%;
+        height: 700px;
+        position: absolute;
+        top: 10;
+        right: 0;
+        z-index: 1;
+        box-sizing: border-box;
+        padding: 1rem;
+        padding-top: 0;
+        opacity: 1;
+        overflow: scroll;
+    }
+    
+    .card .general .more {
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+        font-size: 0.9em;
+    }
+    
+    .btn-circle.btn-lg {
+        width: 50px;
+        height: 50px;
+        padding: 10px 16px;
+        font-size: 18px;
+        line-height: 1.33;
+        border-radius: 25px;
+    }
+    
+    .green {
+        background-color: rgb(122, 214, 122);
+    }
+    
+    .red {
+        background-color: rgb(243, 121, 121);
+    }
+    
+    .yellow {
+        background-color: rgb(245, 245, 111);
+    }
+    
+    .grey {
+        background-color: rgb(134, 134, 133);
+    }
+    
+    .tilde {
+        font-size: 25;
+        font-weight: 500;
+        text-align: center;
+    }
+    
+    .container {
+        -webkit-column-count: 2;
+        -moz-column-count: 2;
+        column-count: 2;
+        -webkit-column-gap: 20px;
+        -moz-column-gap: 20px;
+        column-gap: 20px;
+    }
+    
+    .small {
+        font-size: 14;
+    }
+    
+    .class-info {
+        font-size: large;
+    }
+    
+    .right-split {
+        padding: 50px;
+        /* padding-left: 80px; */
+        /* align-items: center; */
+        float: right;
+        width: 25%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        background-color: slategray;
+    }
+    
+    .left-split {
+        padding: 50px;
+        /* padding-left: 80px; */
+        /* align-items: center; */
+        float: right;
+        width: 75%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+</style>
+
+<body>
+    <!-- <div class="right-split">
+        Hello
+    </div> -->
+    <div class="center">
+        <div class="card ">
+            <div class="additional ">
+                <div class="user-card text-white-50 ">
+                    <center>
+                        <div class="circle ">
+                            <!-- User Profile Image -->
+                            <!-- <div class="image-cropper "> -->
+                            <img class="profile-pic " src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAM1BMVEXk5ueutLfn6eqrsbTp6+zg4uOwtrnJzc/j5earsbW0uby4vcDQ09XGyszU19jd3+G/xMamCvwDAAAFLklEQVR4nO2d2bLbIAxAbYE3sDH//7WFbPfexG4MiCAcnWmnrzkjIRaD2jQMwzAMwzAMwzAMwzAMwzAMwzAMwzAMwzAMwzAMw5wQkHJczewxZh2lhNK/CBOQo1n0JIT74/H/qMV0Z7GU3aCcVPuEE1XDCtVLAhgtpme7H0s1N1U7QjO0L8F7llzGeh1hEG/8Lo7TUmmuSrOfns9xnGXpXxsONPpA/B6OqqstjC6Ax/0ujkNdYQQbKNi2k64qiiEZ+ohi35X+2YcZw/WujmslYewiAliVYrxgJYrdwUmwXsU+RdApUi83oNIE27YvrfB/ZPg8+BJETXnqh9CVzBbTQHgojgiCvtqU9thFJg/CKz3VIMKMEkIXxIWqIpIg2SkjYj+xC816mrJae2aiWGykxRNsW0UwiJghJDljYI5CD8GRiCtIsJxizYUPQ2pzItZy5pcisTRdk/a9m4amtNNfBuQkdVhSaYqfpNTSFGfb9GRIakrE2Pm+GFLaCQPqiu0OpWP+HMPQQcgQMiQprWXNmsVwIjQjYi/ZrhAqNTCgr2gu0Jnz85RSSjso0HkMFZ0YZjKkc26a/jlmh9JiDyDxi9oeorTYAzZkwwoMz19pzj9bnH/GP/+qbchjSGflneWYhtTuKdMOmNKZcJ5TjInQKcYXnESd/jQxy0ENpULTNGOGgxpap/oyw9pbUAqhfx2Dbkhovvfgz4iUzoM9+GlK6/Mh4q29hyC1mwro30hpVVLPF9wYQr71RazOeM5/cw81iBRD+A03aM9/C/obbrKjbYSpCmIVG3qT/Q8oeUo3Rz0IL7vI1tEbCB9pSiu8I/aV8x3Kg/BGWrWp4ZVs0nZfmAoEG4h/61yHYIJiFSl6Q0Vk6tTW1N8kYp8hdOkfHYYMXd2Qft+8CYwqYDSKvqIh+MCF8Wgca2u/cwdgeW3TtuVn6+1oBs3yLo5C2JpK6CvQzGpfUkz9UG/87gCsi5o2LIXolxN0FbwAsjOLEr+YJmXn7iR6N0BCt5p5cMxm7eAsfS+/CACQf4CTpKjzgkvr2cVarVTf96372yut7XLJ1sa7lv6VcfgYrWaxqr3Wlo1S6pvStr22sxOtTNPLzdY3nj20bPP+ejFdJYkLsjGLdtPBEbe/mr2bQKiXWJDroA+vtzc0p9aahuwqHMDYrQEXHEw9jwQl3drMpts9JBU1SdktPe5FBRdJQ6bwXBpa57ib2A8kukQDzMjh++Uo7Fo6Wd02Pkf4fknqoo4HtvAIjsqUcjx6DIPgWCaOML9rKI/oqD9/lgNrn+eF+p7j8tnzHBiR7+kdUGw/+V1Kzkc75mMy6U+FMaxjPibiM1U1uGM+puInHpmALZCgP4pt7i840MV8+0R1zPsRB6UTcqpizncYwZ89syDydfyWCwXB1l8/zRNGWbTG/GHKUm9AkxHMc/EGSk3z2+ArEhPEV5TUBLEvUGFcjEUH80J/jveTGOAJEljJbILWGQT3zRYiwuKsUXN1EEJAzBhRJFll7mBUG7KD8EqPkKekBREaL8hMDZLQSG6AQjtHPYmvTQnX0TtpC1SYCe2YdkkyLP3jj5BSbKiuR585eQhTgoje6yIb0Yb0C+mV6EYvebqw5SDy2WmubogZiF2AVxPC2FpDf8H2Q9QWo6IkjUxTWVEI3WY/wrCeSuqJ+eRWzXR/JXwgVjUMozbCOfoEZiSiKVGepqv5CJ8RyR4D7xBeamqa7z3BJ/z17JxuBPdv93d/a2Ki878MMAzDMAzDMAzDMAzDMF/KP09VUmxBAiI3AAAAAElFTkSuQmCC ">
+                            <!-- </div> -->
+                            <!-- Default Image -->
+                            <!--        <i class="fa fa-user fa-5x "></i> -->
+                        </div>
+                    </center>
+                    <h1 class="pt-3 "> Izabella Zamora</h1>
+                    <h3>MIT Class of 2023</h3>
+                    <p class="pt-1 px-4 text-white text-left ">Skills</p>
+                    <div class="container text-left px-4 ">
+                        <!-- Skills list -->
+                        <li>
+                            C++
+                        </li>
+                        <li>
+                            Python
+                        </li>
+                        <li>
+                            HTML & CSS
+                        </li>
+                        <li>
+                            R
+                        </li>
+                        <li>
+                            PCR
+                        </li>
+                        <li>
+                            Flow Cytometry
+                        </li>
+                        <li>
+                            Immunomagnetic Seperation
+                        </li>
+                        <li>
+                            Mouse Handling,Injections, Disections
+                        </li>
+                    </div>
+                    <div class="text-left px-4 ">
+                        <p class="pt-1 text-white ">Involvment</p>
+                        <!-- Skills list -->
+                        <li>
+                            TA, MIT's Office of Engineering Outreach Programs
+                        </li>
+                        <li>
+                            Web Masters, Sigma Kappy Theda Lambda Chapter
+                        </li>
+                        <li>
+                            Member, Daughters of the American Revolution
+                        </li>
+
+                    </div>
+                </div>
+                <div class=" more-info ">
+                    <img src="https://as1.ftcdn.net/jpg/00/85/63/74/500_F_85637451_wlQ4QULzI0Zxmna4cbYoZAYhCCvCb82O.jpg ">
+                </div>
+                <div class="general ">
+                    <h2>Experence</h2>
+                    <div class="text-left ">
+                        <h5 class="pt-2 font-weight-bold ">Research Intern</h5>
+                        <h6>NASA's Jet Propulsion Labortories</h6>
+                        <p>Summer 2020 - Fall 2020</p>
+                        <div class="small ">Research and analysis of bacterial dry heat resistance, specifically its genomic underpinnings. In the process of editing an extensive review on the topic of bacteria dry heat resistance. Performing DNA and RNA comparison across
+                            bacterial strains with various dry heat resistance values with the goal of creating a computational model to evaluate dry heat resistance and reduce the need for culture based methods.
+                        </div>
+                        <h5 class="pt-2 font-weight-bold ">UROP</h5>
+                        <h6>Koch Institute of Integrative Cancer Research, Spranger Lab
+                        </h6>
+                        <p>Summer 2020 - Fall 2020</p>
+                        <div class="small ">Research in the Spranger lab focused on solid tumor immunology and computational biological analysis. Aid in day to day lab activities such as cell culture, mouse handling, immunological assays, staining and flowing of cells via
+                            flow cytometry. Perform RNA-Seq analysis on single cell data observing expression differences between different tissue types and their responses to immune blocking therapy.
+                        </div>
+                        <h2 class="text-center pt-3 ">Projects</h2>
+                        <h5 class="pt-2 font-weight-bold ">Top of the Pile, Founder
+                        </h5>
+                        <h6>MIT Sandbox
+                        </h6>
+                        <p>Summer 2020 - Fall 2020</p>
+                        <div class="small ">Founder and lead in creating a platform aimed to reinvent the traditional paper resume. Matching internship seeking college students with companies through a digital platform designed to give true dimension to the application process.
+                            Working with a team of fellow students, in all aspects of the business creation including, creating a business plan, performing market research, networking and programming.
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div><span class="more-info ">Mouse over the card for more info</span> -->
+    </div>
+    <center>
+        <div>
+            <button type="button " class="btn btn-circle btn-lg grey "><i class="fa fa-undo "></i></button>
+            <button type="button " class="btn btn-circle btn-lg red "><i class="fa fa-times "></i></button>
+            <button type="button " class="btn btn-circle btn-lg yellow "><span class = "tilde ">&#126;</span></button>
+
+            <button type="button " class="btn btn-circle btn-lg green "><i class="fa fa-check "></i></button>
+
+
+
+        </div>
+    </center>
+    </div>
+
+
+
+
+</body>
+
 
 {% endblock content %}
-
-<!-- recruiter page -->
-
-<!-- else student page -->
