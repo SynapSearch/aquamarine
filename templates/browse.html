@@ -2,7 +2,7 @@
 
 {% if request.user.is_recruiter %}
 <p> Hello recruiter </p>
-<a href="{% url 'profile' %}">
+<a href="{% url 'editprofile' %}">
 	<button  type="submit" name="createprofilebutton" class="btn btn-info btn-block btn-round">Edit Recruiter Profile</button>
 </a>
 {% else %}
