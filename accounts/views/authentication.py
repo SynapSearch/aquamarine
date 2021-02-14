@@ -8,9 +8,6 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
-def home(request):
-	return render(request, 'home.html')
-
 @login_required
 def browse(request):
     return render(request, 'browse.html')
@@ -25,7 +22,10 @@ def signup(request, *args, **kargs):
             if form.is_valid():
                 user = form.save()
                 login(request, user)
-                return redirect('createprofile')
+                if request.user.is_recruiter:
+                    return redirect('r_createprofile')
+                else: 
+                    return redirect('s_createprofile')
         elif 'loginbutton' in request.POST:
             form = AuthenticationForm(data=request.POST)
             if form.is_valid():
@@ -35,7 +35,7 @@ def signup(request, *args, **kargs):
     else:
         form = UserSignupForm()
 
-    return render(request, 'registration/signup.html', {'form': form})
+    return render(request, 'home.html', {'form': form})
 
 
 def logout(request):

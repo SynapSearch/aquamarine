@@ -37,6 +37,7 @@
     --light: #f8f9fa;
     --dark: #343a40;
     --black: #000000;
+    /* --primary: #4CC5C0; */
     --breakpoint-xs: 0;
     --breakpoint-sm: 576px;
     --breakpoint-md: 768px;
@@ -83,7 +84,7 @@ body {
     background-color: #fff;
 }
 
-[tabindex="-1"]:focus:not(:focus-visible) {
+.div [tabindex="-1"]:focus:not(:focus-visible) {
     outline: 0 !important;
 }
 
@@ -1958,8 +1959,8 @@ pre code {
 }
 
 .form-control {
-    display: block;
-    width: 100%;
+    /* display: block; */
+    size: 20;
     height: calc(1.5em + 0.75rem + 2px);
     padding: 0.375rem 0.75rem;
     font-size: 1rem;
@@ -10358,10 +10359,10 @@ body {
     height: auto;
     min-height: 35rem;
     padding: 15rem 0;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 75%, #000000 100%), url("../assets/neuron.png");
+    background: linear-gradient(#4CC5C0, black);
     background-position: center;
     background-repeat: no-repeat;
-    background-attachment: scroll;
+    /* background-attachment: scroll; */
     background-size: cover;
 }
 
