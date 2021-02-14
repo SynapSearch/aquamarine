@@ -28,9 +28,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-LOGIN_URL = 'login'
+LOGIN_URL = 'home'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+AUTH_USER_MODEL = 'accounts.UserProfile'
 
 # Application definition
 
@@ -43,6 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts'
 ]
+
+# ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
