@@ -15,6 +15,7 @@ media
 
 ### Migrations ###
 accounts/migrations
+jobs/migrations
 
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/

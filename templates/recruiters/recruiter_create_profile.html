@@ -1,0 +1,42 @@
+{% extends 'base_jobs.html' %} {% block content %}
+<div class="div-padding">
+
+    <head>
+
+        <h1>Create A Profile
+            <a href="{% url 'r_viewprofile' %}">
+                <i class="fa fa-home fa-pull-right"></i>
+            </a>
+        </h1>
+    </head>
+
+    <br>
+    <br>
+    <form method="POST">
+        {% csrf_token %}
+        <!-- {{form.as_p}} -->
+        <div class="form-group">
+            <label>Title</label>
+            <br>
+            <input type="text" size="50" name="title" placeholder="Add title">
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <br>
+            <textarea type="text" width="300px" height="150px" name="description" placeholder="Add description "></textarea>
+        </div>
+
+        <div class="form-group ">
+            <label>Location</label>
+            <br>
+            <input type="text" name="location">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+</div>
+
+</body>
+</div>
+
+{% endblock content %}
