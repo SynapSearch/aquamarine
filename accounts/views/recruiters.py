@@ -4,7 +4,6 @@ from ..models import UserProfile, RecruiterProfile
 from ..forms import RecruiterProfileForm
 from django.db import models
 from jobs.models import Job
-from django.db.models import Q
 
 @login_required
 def create_profile(request):

@@ -1,5 +1,5 @@
 from django import forms
-from .models import UserProfile, RecruiterProfile
+from .models import UserProfile, RecruiterProfile, StudentProfile, Skill
 from django.db import models, transaction
 from django.contrib.auth.forms import UserCreationForm
 
@@ -15,3 +15,12 @@ class RecruiterProfileForm(forms.ModelForm):
 	class Meta:
 		model = RecruiterProfile
 		fields = ['title', 'description', 'location']
+
+class StudentProfileForm(forms.ModelForm):
+	skills = forms.ModelMultipleChoiceField(queryset=Skill.objects, 
+		widget=forms.CheckboxSelectMultiple(), required=False)
+	class Meta:
+		model = StudentProfile
+		fields = ['first_name', 'last_name', 'school',
+				'graduation_year', 'major', 'skills']
+
