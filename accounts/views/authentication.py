@@ -26,11 +26,6 @@ def signup(request, *args, **kargs):
                     return redirect('r_createprofile')
                 else: 
                     return redirect('s_createprofile')
-            else:
-                print("FORM:")
-                print(form)
-                pass
-                # show error message
         elif 'loginbutton' in request.POST:
             form = AuthenticationForm(data=request.POST)
             if form.is_valid():

@@ -1,5 +1,16 @@
 {% extends 'base.html' %} {% block content %}{% load static %}
 
+<script>
+     // wait for the DOM to be loaded
+     $(function() {
+       // bind 'myForm' and provide a simple callback function
+       $('#signupModal').ajaxForm(function() {
+           alert("Thank you for your comment!");
+       });
+     });
+   </script>
+
+
 <body id="page-top">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
@@ -20,10 +31,20 @@
                 <h1 class="mx-auto my-0 text-uppercase">SynapSearch</h1>
                 <h2 class="text-white-50 mx-auto mt-2 mb-5">Recruitment with transparency, simplicity, and creativity because we believe you are more than just a piece of paper.</h2>
                 <a class="btn btn-primary" data-target="#loginModal" data-toggle="modal">Log in</a>
-                <a class="btn btn-primary" data-target="#SignupModal" data-toggle="modal">Sign Up</a>
+                <a class="btn btn-primary" data-target="#signupModal" data-toggle="modal">Sign Up</a>
             </div>
         </div>
     </header>
+    <script>
+        $('#signupModal').on('show.bs.modal', function (event) {
+            var modal = $(this)
+            $.ajax({
+                context: document.body
+            }).done(function(response) {
+                modal.html(response);
+            });
+        })
+    </script>
 
     <!-- About-->
     <section class="about-section text-center" id="about">
@@ -176,8 +197,7 @@
     <!-- Third party plugin JS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 
-
-    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header border-bottom-0">
@@ -191,8 +211,8 @@
                     </div>
                     <div class="d-flex flex-column text-center">
                         <form method="POST" name="form">
+                            {% csrf_token %}
                             <div class=" form-group ">
-                                {% csrf_token %}
                                 <input type="text" name="username" placeholder="Username... " class="form-control ">
                             </div>
 
@@ -226,26 +246,26 @@
         </div>
 
     </div>
-    <div class="modal fade " id="SignupModal" tabindex="-1 " role="dialog " aria-labelledby="exampleModalLabel " aria-hidden="true ">
+
+    <div class="modal fade " visible="true" id="signupModal" tabindex="-1 " role="dialog " aria-labelledby="signupModal " aria-hidden="true ">
         <div class="modal-dialog modal-dialog-centered " role="document ">
             <div class="modal-content ">
                 <div class="modal-header border-bottom-0 ">
                     <button type="button " class="close " data-dismiss="modal " aria-label="Close ">
-             <span aidden="true ">&times;</span>
-              </button>
+                        <span aria-hidden="true ">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body ">
                     <div class="form-title text-center ">
                         <h4>Sign Up!</h4>
                     </div>
                     <div class="d-flex flex-column text-center ">
-
-                        <form method="POST" action="" name="form">
+                        <form method="POST" id="signupForm" action="" name="form">
                             {% csrf_token %}
                             {% for field in form %}
                                 <div class="form-group " >
                                     {% for error in field.errors %}
-                                    <div class="form-error-text">{{error}}</div>
+                                    <div class="form-error-text ">{{error}}</div>
                                     {% endfor %}
                                     {% if field.id_for_label == "id_is_recruiter" %}
                                         {{ field.label }}<br>
@@ -253,42 +273,30 @@
                                     {{ field }}
                                 </div>
                             {% endfor %}
-
-                            <!-- <div class="form-group ">
-                                <input type="text" name="username" placeholder="Username... " class="form-control ">
-                            </div>
-                            <div class="form-group ">
-                                <input type="password" name="password1" placeholder="Password... " class="form-control ">
-                            </div>
-                            <div class="form-group ">
-                                <input type="password" name="password2" placeholder="Confirm Password... " class="form-control ">
-                            </div> -->
-
-
                             <div class="form-group">
-                                <!-- <label>Account type</label>
-                                <div class="form-control">
-                                    <div class="select">
-                                        <select name="is_recruiter">
-                                            <option value="False">Job seeker</option>
-                                            <option value="True">Employer</option>
-                                        </select>
-                                    </div>
-                                </div> -->
                             <button type="submit" name="signupbutton" class="btn btn-info btn-block btn-round ">Sign Up</button>
-                        </form>
-                        </div>
-                        <div class="modal-footer d-flex justify-content-center ">
-                            <div>
-                                Already have an account?
-                                <a href="{% url 'home' %} " class="text-info ">Login</a>
-
-                            </div>
+                        </form>         
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center ">
+                        <div>
+                            Already have an account?
+                            <a href="{% url 'home' %} " class="text-info ">Login</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <script>   
+        $(function() {
+            var form_options = {
+                target: '#signupModal',
+                success: function() {  }
+            }
+            $('#signupForm').ajaxForm(form_options);
+    
+        });             
+    </script>
 
 
 </body>
