@@ -22,7 +22,7 @@ from jobs.views import create_jobs
 
 
 urlpatterns = [
-	path('', signup, name='home'),
+	path('', home, name='home'),
     path('logout/', views.LogoutView.as_view(), name='logout'),
     path('admin/', admin.site.urls),
     path('', include('accounts.urls')),

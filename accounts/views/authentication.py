@@ -12,30 +12,40 @@ from django.contrib.auth.decorators import login_required
 def browse(request):
     return render(request, 'browse.html')
 
+def home(request):
+    return render(request, 'home.html')
+
 def signup(request, *args, **kargs):
     if request.user.is_authenticated:
         return redirect('browse')
 
     if request.method == 'POST':
-        if 'signupbutton' in request.POST:
-            form = UserSignupForm(request.POST)
-            if form.is_valid():
-                user = form.save()
-                login(request, user)
-                if request.user.is_recruiter:
-                    return redirect('r_createprofile')
-                else: 
-                    return redirect('s_createprofile')
-        elif 'loginbutton' in request.POST:
-            form = AuthenticationForm(data=request.POST)
-            if form.is_valid():
-                user = form.get_user()
-                login(request, user)
-                return redirect('browse')
+        form = UserSignupForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            if request.user.is_recruiter:
+                return redirect('r_createprofile')
+            else: 
+                return redirect('s_createprofile')
     else:
         form = UserSignupForm()
 
-    return render(request, 'home.html', {'form': form})
+    return render(request, 'signup.html', {'form': form})
+
+def login_view(request, *args, **kargs):
+    if request.user.is_authenticated:
+        return redirect('browse')
+
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('browse')
+    
+
+    return render(request, 'login.html', {})
 
 
 def logout(request):
