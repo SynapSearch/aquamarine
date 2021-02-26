@@ -19,6 +19,10 @@ from django.contrib.auth import views
 
 from accounts.views.authentication import *
 from jobs.views import create_jobs
+from . import settings
+from django.contrib.staticfiles.urls import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+ 
 
 
 urlpatterns = [
@@ -29,3 +33,6 @@ urlpatterns = [
     path('job/create', create_jobs, name="createjob")
 
 ]
+ 
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

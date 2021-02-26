@@ -1,4 +1,7 @@
 # TopOfThePile
+
+INSTALL: python -m pip install Pillow
+
 Commands:</br>
 
 
