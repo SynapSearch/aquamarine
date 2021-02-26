@@ -45,8 +45,8 @@ class StudentProfile(models.Model):
 	graduation_year = models.IntegerField()
 	major = models.CharField(max_length=100)
 
-	skills = models.ManyToManyField(Skill, blank=True, null=True)
-	interests = models.ManyToManyField(Interest, blank=True, null=True)
+	# skills = models.ManyToManyField(Skill, blank=True, null=True)
+	# interests = models.ManyToManyField(Interest, blank=True, null=True)
 
 	def __str__(self):
 		return self.user.username

@@ -3,6 +3,8 @@ from django.urls import path, include
 from .views import students, recruiters, authentication
 
 urlpatterns = [
+	path('signup/', authentication.signup, name="signup"),
+	path('login/', authentication.login_view, name="login"),
 	path('browse/', authentication.browse, name='browse'),
 	
 	path('recruiters/profile/', recruiters.view_profile, name='r_viewprofile'),

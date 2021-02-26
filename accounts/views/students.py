@@ -11,7 +11,7 @@ def create_profile(request):
 		if form.is_valid():
 			profile = form.save(commit=False)
 			profile.user = request.user
-			profile.skills.add(form.cleaned_data.get('skills'))
+			# profile.skills.add(form.cleaned_data.get('skills'))
 			profile.save()
 			return redirect('s_viewprofile')
 		else:

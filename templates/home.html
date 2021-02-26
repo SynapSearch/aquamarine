@@ -30,8 +30,13 @@
             <div class="mx-auto text-center">
                 <h1 class="mx-auto my-0 text-uppercase">SynapSearch</h1>
                 <h2 class="text-white-50 mx-auto mt-2 mb-5">Recruitment with transparency, simplicity, and creativity because we believe you are more than just a piece of paper.</h2>
+<<<<<<< HEAD
                 <a class="btn btn-primary" data-target="#loginModal" data-toggle="modal">Log in</a>
                 <a class="btn btn-primary" data-target="#signupModal" data-toggle="modal">Sign Up</a>
+=======
+                <a class="btn btn-primary" href="{% url 'login' %}">Log in</a>
+                <a class="btn btn-primary" href="{% url 'signup' %}">Sign Up</a>
+>>>>>>> main
             </div>
         </div>
     </header>
@@ -197,7 +202,7 @@
     <!-- Third party plugin JS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 
-    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
+    <!-- <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header border-bottom-0">
@@ -296,7 +301,7 @@
             $('#signupForm').ajaxForm(form_options);
     
         });             
-    </script>
+    </script> -->
 
 
 </body>
