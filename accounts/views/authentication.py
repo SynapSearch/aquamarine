@@ -25,6 +25,7 @@ def signup(request, *args, **kargs):
             user = form.save()
             login(request, user)
             if request.user.is_recruiter:
+                print("IS IN IN RECRUITER")
                 return redirect('r_createprofile')
             else: 
                 return redirect('s_createprofile')

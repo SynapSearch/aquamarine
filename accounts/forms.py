@@ -17,10 +17,10 @@ class RecruiterProfileForm(forms.ModelForm):
 		fields = ['title', 'description', 'location']
 
 class StudentProfileForm(forms.ModelForm):
-	skills = forms.ModelMultipleChoiceField(queryset=Skill.objects, 
-		widget=forms.CheckboxSelectMultiple(), required=False)
+	# skills = forms.ModelMultipleChoiceField(queryset=Skill.objects, 
+	# 	widget=forms.CheckboxSelectMultiple(), required=False)
 	class Meta:
 		model = StudentProfile
 		fields = ['first_name', 'last_name', 'school',
-				'graduation_year', 'major', 'skills']
+				'graduation_year', 'major'] #, 'skills']
 
