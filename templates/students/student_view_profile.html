@@ -74,7 +74,11 @@
                     </div>
                     <h2>Experence</h2>
                     {% for e in exp %}
+                    <div class="text-right">
+                        <a href="{% url 'editexp' e.pk %}"> Edit</a>
+                    </div>
                     <div class="text-left ">
+
                         <h5 class="pt-2 font-weight-bold ">{{e.title}}</h5>
                         <h6>{{e.company}}</h6>
                         <p>{{e.dates}}</p>
@@ -94,6 +98,9 @@
                         </div>
                         <h2 class="text-center pt-3 ">Projects</h2>
                         {% for p in project %}
+                        <div class="text-right">
+                            <a href="{% url 'editproject' p.pk %} "> Edit</a>
+                        </div>
 
                         <h5 class="pt-2 font-weight-bold ">{{p.title}}
                         </h5>

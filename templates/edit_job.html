@@ -1,0 +1,50 @@
+{% extends 'base_jobs.html' %} {% block content %}
+<div class="div-padding">
+
+    <head>
+
+        <h1>Edit Job
+            <a href="{% url 'r_viewprofile' %}">
+                <i class="fa fa-home fa-pull-right"></i>
+            </a>
+        </h1>
+    </head>
+
+    <br>
+    <br>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>Title</label>
+            <br> {{form.title}}
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <br> {{form.description}}
+        </div>
+
+        <div class=" form-group ">
+            <label>Location</label>
+            <br> {{form.location}}
+        </div>
+        <div class=" form-group ">
+            <label>Term</label>
+            <br> {{form.term}}
+        </div>
+        <div class=" form-group ">
+            <label>Requirments</label>
+            <br> {{form.requirments}}
+        </div>
+        <div class=" form-group ">
+            <label>Prefences</label>
+            <br> {{form.prefences}}
+        </div>
+        <button type="submit" class="btn btn-primary ">Submit</button>
+    </form>
+
+</div>
+
+</body>
+</div>
+
+{% endblock content %}
