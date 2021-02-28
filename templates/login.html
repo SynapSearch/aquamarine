@@ -14,16 +14,28 @@
                 </div>
                 <div class="d-flex flex-column text-center">
                     <form method="POST" name="form">
-                        <div class=" form-group ">
+                        <!-- <div class=" form-group "> -->
                             {% csrf_token %}
-                            <input type="text" name="username" placeholder="Username... " class="form-control ">
-                        </div>
+                            {% for field in form %}
+                            <div class="form-group " >
+                                {% for error in field.errors %}
+                                <div class="form-error-text ">{{error}}</div>
+                                {% endfor %}
+                                {% if field.id_for_label == "id_is_recruiter" %}
+                                    {{ field.label }}<br>
+                                {% endif %}
+                                {{ field }}
+                            </div>
+                            {% endfor %}
 
-                        <div class="form-group ">
+                            <!-- <input type="text" name="username" placeholder="Username... " class="form-control "> -->
+                        <!-- </div> -->
+
+                        <!-- <div class="form-group ">
                             <input type="password" name="password" placeholder="Password... " class="form-control ">
-                        </div>
+                        </div> -->
                 </div>
-                <div> {{form.errors}}</div>
+                <!-- <div> {{form.errors}}</div> -->
                 <button type="submit" name="loginbutton" class="btn btn-info btn-block btn-round ">Log In</button>
                 </form>
 
