@@ -5,9 +5,6 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 
-
-# Create your views here.
-
 @login_required
 def browse(request):
     return render(request, 'browse.html')
