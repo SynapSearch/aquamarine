@@ -54,6 +54,21 @@ def create_experience(request):
 	return render(request, "students/student_create_exp.html", context)
 
 @login_required
+def edit_experience(request, pk):
+	exp = get_object_or_404(Experience, pk=pk)
+	if request.method == 'POST':
+		form = ExperienceForm(request.POST, instance=exp)
+		if form.is_valid():
+			exp = form.save()
+			exp.save()
+			return redirect('s_viewprofile')
+	else:
+		form = ExperienceForm(instance=exp)
+
+	return render(request, 'students/student_edit_exp.html', {'form':form})
+
+
+@login_required
 def create_project(request):
 	form = ProjectForm(request.POST)
 	if form.is_valid():
@@ -66,3 +81,18 @@ def create_project(request):
 		'form': form,
 	}
 	return render(request, "students/student_create_project.html", context)
+
+
+@login_required
+def edit_project(request, pk):
+	project = get_object_or_404(Project, pk=pk)
+	if request.method == 'POST':
+		form = ProjectForm(request.POST, instance=project)
+		if form.is_valid():
+			project = form.save()
+			project.save()
+			return redirect('s_viewprofile')
+	else:
+		form = ProjectForm(instance=project)
+
+	return render(request, 'students/student_edit_project.html', {'form':form})

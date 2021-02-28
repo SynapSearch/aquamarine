@@ -18,7 +18,7 @@ from django.urls import path, include
 from django.contrib.auth import views
 
 from accounts.views.authentication import *
-from jobs.views import create_jobs
+from jobs.views import create_jobs, edit_jobs
 from . import settings
 from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
@@ -30,7 +30,8 @@ urlpatterns = [
     path('logout/', views.LogoutView.as_view(), name='logout'),
     path('admin/', admin.site.urls),
     path('', include('accounts.urls')),
-    path('job/create', create_jobs, name="createjob")
+    path('job/create', create_jobs, name="createjob"),
+    path('job/edit/<int:pk>/', edit_jobs, name="editjob")
 
 ]
  
