@@ -192,11 +192,8 @@
 <div class="div-blue">
     <nav class="navbar justify-content-between">
         <!-- Make conditional - should not always show up -->
-        {% if request.user.is_recruiter %}
-        <a class="text-white navbar-brand" href="{% url 'r_viewprofile' %} ">My Profile</a>
-        <!-- Do recruiters even need a search bar? -->
-        {% else %}
-        <a class="text-white navbar-brand" href="{% url 's_viewprofile' %} ">My Profile</a>
+
+        <a class="text-white navbar-brand" href="{% url 'browse' %} ">Browse</a>
         <div class="d-flex">
             <form class="form-inline pt-3" action="#" method="get">
                 <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-1 ">
@@ -205,7 +202,6 @@
                 </div>
             </form>
         </div>
-        {% endif %}
 
         <div>
             <span class="hello-msg navbar-brand ">Hello, {{request.user}}</span>

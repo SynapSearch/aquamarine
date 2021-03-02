@@ -1,0 +1,26 @@
+{% extends 'base_jobs.html' %} {% block content %}
+<div class="div-padding">
+
+    <head>
+
+        <h1>Create A New Experence
+            <a href="{% url 's_viewprofile' %}">
+                <i class="fa fa-home fa-pull-right"></i>
+            </a>
+        </h1>
+    </head>
+
+    <br>
+    <br>
+    <form method="POST">
+        {% csrf_token %} {{form.as_p}}
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+</div>
+
+</body>
+</div>
+
+{% endblock content %}

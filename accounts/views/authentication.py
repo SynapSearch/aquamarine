@@ -1,20 +1,50 @@
 from django.shortcuts import render, redirect
-from ..models import UserProfile, RecruiterProfile
+
+from ..models import UserProfile, RecruiterProfile, StudentProfile, Experience, Project
 from ..forms import UserSignupForm, UserLoginForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
+from jobs.models import Job
+
 
 @login_required
 def browse(request):
-    return render(request, 'browse.html')
+    if request.user.is_recruiter:
+        ## replace with actual helper function that has a mathing alg 
+        options = StudentProfile.objects.first()
+        exp = Experience.objects.filter(created_by=options.user)
+        project = Project.objects.filter(created_by=options.user)
+        context = {'options': options, 'exp': exp, 'project': project}
+    else:
+        ## replace with actual function that has a mathing alg 
+        options = RecruiterProfile.objects.first()
+        job = Job.objects.filter(created_by=options.user).first()
+        context = {'options': options, 'job': job}
+        print(options)
+        
+    
+    return render(request, 'browse.html', context)
+
+def r_browse(request, pk):
+    ## replace with actual helper function that has a mathing alg 
+    options = StudentProfile.objects.first()
+    exp = Experience.objects.filter(created_by=options.user)
+    project = Project.objects.filter(created_by=options.user)
+    context = {'options': options, 'exp': exp, 'project': project}
+    
+    return render(request, 'browse.html', context)
+
 
 def home(request):
     return render(request, 'home.html')
 
 def signup(request, *args, **kargs):
     if request.user.is_authenticated:
-        return redirect('browse')
+        if request.user.is_recruiter:
+            return redirect('r_viewprofile')
+        else:
+            return redirect('s_viewprofile')
 
     if request.method == 'POST':
         form = UserSignupForm(request.POST)

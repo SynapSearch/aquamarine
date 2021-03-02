@@ -1,15 +1,129 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'students/student_view_profile_base.html' %} {% block content %}
 
 <body>
-	{{profile.first_name}}
-	<br>
-	{{profile.last_name}}
-	<br>
-	{{profile.school}}
-	<br>
-	{{profile.graduation_year}}
-	<br>
-	{{profile.major}}
+
+    <div class="center">
+        <div class="card ">
+            <div class="additional ">
+                <div class="user-card text-white-50 ">
+                    <div class="text-right px-3 pt-2">
+                        <a href="{% url 's_editprofile' %}"> Edit </a>
+                    </div>
+                    <center>
+                        <div class="circle ">
+                            <!-- User Profile Image -->
+                            <!-- <div class="image-cropper "> -->
+                            <img class="profile-pic " src="{{ profile.picture.url }}">
+                            <!-- </div> -->
+                            <!-- Default Image -->
+                            <!--        <i class=" fa fa-user fa-5x "></i> -->
+                        </div>
+                    </center>
+                    <h1 class="pt-3 "> {{profile.first_name}} {{profile.last_name}}</h1>
+                    <h3>{{profile.school}} Class of {{profile.graduation_year}}</h3>
+                    <h3> {{profile.major}} </h3>
+                    <p class="pt-1 px-4 text-white text-left ">Skills</p>
+                    <div class="container text-left px-4 ">
+                        <!-- Skills list -->
+                        <li>
+                            C++
+                        </li>
+                        <li>
+                            Python
+                        </li>
+                        <li>
+                            HTML & CSS
+                        </li>
+                        <li>
+                            R
+                        </li>
+                        <li>
+                            PCR
+                        </li>
+                        <li>
+                            Flow Cytometry
+                        </li>
+                        <li>
+                            Immunomagnetic Seperation
+                        </li>
+                        <li>
+                            Mouse Handling,Injections, Disections
+                        </li>
+                    </div>
+                    <div class="text-left px-4 ">
+                        <p class="pt-1 text-white ">Involvment</p>
+                        <!-- Skills list -->
+                        <li>
+                            TA, MIT's Office of Engineering Outreach Programs
+                        </li>
+                        <li>
+                            Web Masters, Sigma Kappy Theda Lambda Chapter
+                        </li>
+                        <li>
+                            Member, Daughters of the American Revolution
+                        </li>
+
+                    </div>
+                </div>
+                <div class=" more-info ">
+                    <img src="https://as1.ftcdn.net/jpg/00/85/63/74/500_F_85637451_wlQ4QULzI0Zxmna4cbYoZAYhCCvCb82O.jpg ">
+                </div>
+                <div class="general ">
+                    <div class="text-right px-3 pt-2 ">
+                        <a href="{% url 's_createexp' %} "> Add </a>
+                    </div>
+                    <h2>Experence</h2>
+                    {% for e in exp %}
+                    <div class="text-right">
+                        <a href="{% url 'editexp' e.pk %}"> Edit</a>
+                    </div>
+                    <div class="text-left ">
+
+                        <h5 class="pt-2 font-weight-bold ">{{e.title}}</h5>
+                        <h6>{{e.company}}</h6>
+                        <p>{{e.dates}}</p>
+                        <div class="small ">
+                            {{e.description}}
+                        </div>
+                        {% endfor %}
+                        <!-- <h5 class="pt-2 font-weight-bold ">UROP</h5>
+                        <h6>Koch Institute of Integrative Cancer Research, Spranger Lab
+                        </h6>
+                        <p>Summer 2020 - Fall 2020</p>
+                        <div class="small ">Research in the Spranger lab focused on solid tumor immunology and computational biological analysis. Aid in day to day lab activities such as cell culture, mouse handling, immunological assays, staining and flowing of cells via
+                            flow cytometry. Perform RNA-Seq analysis on single cell data observing expression differences between different tissue types and their responses to immune blocking therapy.
+                        </div> -->
+                        <div class="text-right px-3 pt-2 ">
+                            <a href="{% url 's_createproject' %} "> Add </a>
+                        </div>
+                        <h2 class="text-center pt-3 ">Projects</h2>
+                        {% for p in project %}
+                        <div class="text-right">
+                            <a href="{% url 'editproject' p.pk %} "> Edit</a>
+                        </div>
+
+                        <h5 class="pt-2 font-weight-bold ">{{p.title}}
+                        </h5>
+                        <h6>{{p.company}}
+                        </h6>
+                        <p>{{p.dates}}</p>
+                        <div class="small ">
+                            {{p.description}}
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div><span class="more-info ">Mouse over the card for more info</span> -->
+    </div>
+    </div>
+
+
+
+
 </body>
+
 
 {% endblock content %}
