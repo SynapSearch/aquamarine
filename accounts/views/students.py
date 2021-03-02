@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from ..models import UserProfile, StudentProfile, Project, Experience
+from ..models import UserProfile, StudentProfile, Project, Experience, Skill, Interest
 from ..forms import StudentProfileForm, ProjectForm, ExperienceForm
 from django.db import models
 
@@ -9,8 +9,18 @@ def create_profile(request):
 	if request.method == 'POST':
 		form = StudentProfileForm(request.POST)
 		if form.is_valid():
-			profile = form.save(commit=False)
+			profile = form.save()
 			profile.user = request.user
+			skills = request.POST.getlist('skills')
+			interests = request.POST.getlist('interests')
+			for s in skills:
+				s = Skill.objects.get_or_create(name=s)[0]
+				s.save()
+				profile.skills.add(s)
+			for i in interests:
+				i = Interest.objects.get_or_create(name=i)[0]
+				i.save()
+				profile.interests.add(i)
 			profile.save()
 			return redirect('s_viewprofile')
 		else:
@@ -18,7 +28,11 @@ def create_profile(request):
 	else:
 		form = StudentProfileForm()
 
-	return render(request, 'students/student_create_profile.html', {'form':form})
+	interest_list = Interest.objects.all()
+	skill_list = Skill.objects.all()
+	context = {'form':form, 'skill_list':skill_list, 'interest_list': interest_list}
+
+	return render(request, 'students/student_create_profile.html', context)
 
 @login_required
 def view_profile(request):

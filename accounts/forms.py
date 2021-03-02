@@ -1,5 +1,5 @@
 from django import forms
-from .models import UserProfile, RecruiterProfile, StudentProfile, Skill, Experience, Project
+from .models import UserProfile, RecruiterProfile, StudentProfile, Experience, Project
 from django.db import models, transaction
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
@@ -31,20 +31,15 @@ class UserLoginForm(AuthenticationForm):
 		widget=forms.PasswordInput(attrs={'placeholder':'Password'}),
 		error_messages={'required': 'Passwords must be at least 8 characters long.'})
 
-
 class RecruiterProfileForm(forms.ModelForm):
 	class Meta:
 		model = RecruiterProfile
 		fields = ['title', 'description', 'location', 'picture']
 
 class StudentProfileForm(forms.ModelForm):
-	# skills = forms.ModelMultipleChoiceField(queryset=Skill.objects, 
-	# 	widget=forms.CheckboxSelectMultiple(), required=False)
 	class Meta:
 		model = StudentProfile
 		fields = ['first_name', 'last_name', 'school', 'graduation_year', 'major', 'picture']
-
-
 
 class ExperienceForm(forms.ModelForm):
 	class Meta: 
