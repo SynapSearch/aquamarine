@@ -1,14 +1,12 @@
 from django.shortcuts import render, redirect
+
 from ..models import UserProfile, RecruiterProfile, StudentProfile, Experience, Project
-from ..forms import UserSignupForm
+from ..forms import UserSignupForm, UserLoginForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from jobs.models import Job
 
-
-
-# Create your views here.
 
 @login_required
 def browse(request):
@@ -67,14 +65,15 @@ def login_view(request, *args, **kargs):
         return redirect('browse')
 
     if request.method == 'POST':
-        form = AuthenticationForm(data=request.POST)
+        form = UserLoginForm(data=request.POST)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
             return redirect('browse')
-    
+    else:
+        form = UserLoginForm()
 
-    return render(request, 'login.html', {})
+    return render(request, 'login.html', {'form': form})
 
 
 def logout(request):

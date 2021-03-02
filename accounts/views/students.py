@@ -13,6 +13,8 @@ def create_profile(request):
 			profile.user = request.user
 			profile.save()
 			return redirect('s_viewprofile')
+		else:
+			form = StudentProfileForm()
 	else:
 		form = StudentProfileForm()
 
