@@ -43,7 +43,7 @@ class StudentProfile(models.Model):
 	graduation_year = models.IntegerField()
 	major = models.CharField(max_length=100)
 
-	picture = models.ImageField(upload_to="gallery", default="gallery/profile_pic_default.png", blank=True)
+	picture = models.ImageField(upload_to="gallery", default="gallery/profile_pic_default.png", blank=True, null=True)
 
 	# skills = models.ManyToManyField(Skill, blank=True, null=True)
 	# interests = models.ManyToManyField(Interest, blank=True, null=True)

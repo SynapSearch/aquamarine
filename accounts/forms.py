@@ -37,26 +37,13 @@ class RecruiterProfileForm(forms.ModelForm):
 		model = RecruiterProfile
 		fields = ['title', 'description', 'location', 'picture']
 
-	username = forms.EmailField(max_length=255, 
-		widget=forms.TextInput(attrs={'placeholder':'Email'}),
-		error_messages={'required': 'Please enter a valid email address.'})
-	password1 = forms.CharField(max_length=255,
-		widget=forms.PasswordInput(attrs={'placeholder':'Password'}),
-		error_messages={'required': 'Passwords must be at least 8 characters long.'})
-
-
 class StudentProfileForm(forms.ModelForm):
 	# skills = forms.ModelMultipleChoiceField(queryset=Skill.objects, 
 	# 	widget=forms.CheckboxSelectMultiple(), required=False)
 	class Meta:
 		model = StudentProfile
 		fields = ['first_name', 'last_name', 'school', 'graduation_year', 'major', 'picture']
-	username = forms.EmailField(max_length=255, 
-		widget=forms.TextInput(attrs={'placeholder':'Email'}),
-		error_messages={'required': 'Please enter a valid email address.'})
-	password1 = forms.CharField(max_length=255,
-		widget=forms.PasswordInput(attrs={'placeholder':'Password'}),
-		error_messages={'required': 'Passwords must be at least 8 characters long.'})
+
 
 
 class ExperienceForm(forms.ModelForm):
