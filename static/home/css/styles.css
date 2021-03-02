@@ -2114,6 +2114,10 @@ textarea.form-control {
     margin-top: 0.25rem;
 }
 
+.form-error-text {
+    color: red;
+}
+
 .form-row {
     display: flex;
     flex-wrap: wrap;

@@ -14,6 +14,8 @@ def create_profile(request):
 			# profile.skills.add(form.cleaned_data.get('skills'))
 			profile.save()
 			return redirect('s_viewprofile')
+		else:
+			form = StudentProfileForm()
 	else:
 		form = StudentProfileForm()
 
