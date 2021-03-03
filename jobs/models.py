@@ -12,25 +12,9 @@ class Job(models.Model):
     description = models.TextField(blank=False) # set a max words 
     published = models.DateField(auto_now_add = True)
     location = models.TextField(blank=True) # location look up?
-    CatagoryType = (('1', 'Course 1'),
-                    ('2','Course 2'),
-                    ('3', 'Course 3'),
-                    ('4', 'Course 4'),
-                    ('5', 'Course 5'),
-                    ('6', 'Course 6'),
-                    ('7', 'Course 7'),
-                    ('8','Course 8'),
-                    ('9', 'Course 9'),
-                    ('10', 'Course 10'),
-                    ('11', 'Course 11'),
-                    ('12', 'Course 12'),
-                    ('14', 'Course 14'),
-                    ('15', 'Course 15'),
-                    ('15', 'Course 16'),
-                    ('17', 'Course 17'),
-                    ('18', 'Course 18'),
-                    ('20', 'Course 20'))
-    catagory = models.CharField(blank=True, max_length = 10, choices = CatagoryType),
+    courses = [1,2,3,4,5,6,7,8,9,10,11,12,14,15,16,17,18,20,21,22,24]
+    CategoryType = tuple([(str(c), "Course " + str(c)) for c in courses])
+    category = models.CharField(blank=True, max_length = 10, choices = CategoryType),
     TermType = (('Summer', 'summer'),
             ('Fall', 'fall'),
             ('IAP', 'iap'),
