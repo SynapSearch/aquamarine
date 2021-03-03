@@ -19,18 +19,12 @@
 </style>
 
 <body>
-    <!-- <div class="right-split">Hello </div>-->
     <div class="center">
         <div class="card ">
             <div class="additional ">
                 <div class="user-card text-white-50 ">
                     <center>
                         <div class="circle ">
-                            <!-- User Profile Image -->
-                            <!-- <div class="image-cropper ">--><img class="profile-pic " src="{{ options.picture.url }}">
-                            <!-- </div>-->
-                            <!-- Default Image -->
-                            <!-- <i class=" fa fa-user fa-5x "></i>--></div>
                     </center>
                     {% if request.user.is_recruiter %}
                     <h1 class="pt-3 ">{{options.first_name}} {{options.last_name}}</h1>
@@ -52,7 +46,7 @@
                         <li>Mouse Handling, Injections, Disections </li>
                     </div>
                     <div class="text-left px-4 ">
-                        <p class="pt-1 text-white ">Involvment</p>
+                        <p class="pt-1 text-white ">Involvement</p>
                         <!-- Skills list -->
                         <li>TA, MIT's Office of Engineering Outreach Programs
                         </li>
@@ -63,7 +57,7 @@
                 <!-- <div class="more-info "></div> -->
                 <div class="general ">
                     {% if request.user.is_recruiter %}
-                    <h2>Experence</h2>
+                    <h2>Experience</h2>
                     {% for e in exp %}
                     <div class="text-left ">
                         <h5 class="pt-2 font-weight-bold ">{{e.title}}</h5>

@@ -10,6 +10,6 @@ class CreateJobForm(forms.ModelForm):
             'location',
             # 'catagory',
             'term',
-            'requirments',
-            'prefences'
+            'requirements',
+            'preferences'
             ]
