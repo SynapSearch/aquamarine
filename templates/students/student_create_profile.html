@@ -44,6 +44,22 @@
             <input type="text" name="major">
         </div>
 
+        <div class="form-group">
+            {% for skill in skill_list %}
+                {{ skill.get_name_display}}
+                <input type="checkbox" value="{{ skill.name }}" name="skills">
+                <br>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {% for interest in interest_list %}
+                {{ interest.get_name_display}}
+                <input type="checkbox" value="{{ interest.name }}" name="interests">
+                <br>
+            {% endfor %}
+        </div>
+
         <input type="file" name="picture" />
 
         <button type="submit" value="Upload" class="btn btn-primary">Submit</button>

@@ -19,19 +19,25 @@ class RecruiterProfile(models.Model):
 	def __str__(self):
 		return self.user.username
 
+class Interest(models.Model):
+	INTERESTS = (
+		('0','Machine Learning'),
+		('1','Biology'),
+		)
+	name = models.CharField(max_length=50, choices=INTERESTS)
+
+	def __str__(self):
+		return self.name
+
 class Skill(models.Model):
 	SKILLS = (
-		('c++','C++'),
-		('java', 'Java')
+		('0','C++'),
+		('1', 'Java'),
 		)
 	name = models.CharField(max_length=50, choices=SKILLS)
 
 	def __str__(self):
 		return self.name
-
-
-class Interest(models.Model):
-	name = models.CharField(max_length=50)
 
 class StudentProfile(models.Model):
 	user = models.OneToOneField(UserProfile, on_delete=models.CASCADE, primary_key=True)
@@ -45,8 +51,8 @@ class StudentProfile(models.Model):
 
 	picture = models.ImageField(upload_to="gallery", default="gallery/profile_pic_default.png", blank=True, null=True)
 
-	# skills = models.ManyToManyField(Skill, blank=True, null=True)
-	# interests = models.ManyToManyField(Interest, blank=True, null=True)
+	skills = models.ManyToManyField(Skill)
+	interests = models.ManyToManyField(Interest)
 
 	def __str__(self):
 		return self.user.username
