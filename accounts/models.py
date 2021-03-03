@@ -31,8 +31,8 @@ class Interest(models.Model):
 
 class Skill(models.Model):
 	SKILLS = (
-		('c++','C++'),
-		('java', 'Java'),
+		('0','C++'),
+		('1', 'Java'),
 		)
 	name = models.CharField(max_length=50, choices=SKILLS)
 
