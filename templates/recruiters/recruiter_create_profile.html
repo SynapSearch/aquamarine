@@ -12,7 +12,7 @@
 
     <br>
     <br>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <!-- {{form.as_p}} -->
         <div class="form-group">
@@ -31,7 +31,8 @@
             <br>
             <input type="text" name="location">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <input type="file" name="picture" />
+        <button type="submit" class="btn btn-primary" value="Upload">Submit</button>
     </form>
 
 </div>

@@ -22,7 +22,7 @@ MAIN_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '22tuq)&@crvky7g8q$e@&--2p!s!nfzlc5$d7x#foibpl2!f0@'
+SECRET_KEY = os.environ["SYNS_KEY"] if "SYNS_KEY" in os.environ else ""
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -32,6 +32,9 @@ ALLOWED_HOSTS = []
 LOGIN_URL = 'home'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'accounts.UserProfile'
 

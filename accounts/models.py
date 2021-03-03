@@ -14,6 +14,8 @@ class RecruiterProfile(models.Model):
 	title = models.CharField(max_length=150)
 	description = models.TextField()
 	location = models.CharField(max_length=150)
+	picture = models.ImageField(upload_to="gallery", default="gallery/profile_pic_default.png", blank=True)
+
 	def __str__(self):
 		return self.user.username
 
@@ -31,10 +33,6 @@ class Skill(models.Model):
 class Interest(models.Model):
 	name = models.CharField(max_length=50)
 
-class Experience(models.Model):
-	title = models.CharField(max_length=50)
-	description = models.TextField()
-
 class StudentProfile(models.Model):
 	user = models.OneToOneField(UserProfile, on_delete=models.CASCADE, primary_key=True)
 	created_at = models.DateTimeField(auto_now_add=True)
@@ -45,11 +43,33 @@ class StudentProfile(models.Model):
 	graduation_year = models.IntegerField()
 	major = models.CharField(max_length=100)
 
-	skills = models.ManyToManyField(Skill, blank=True, null=True)
-	interests = models.ManyToManyField(Interest, blank=True, null=True)
+	picture = models.ImageField(upload_to="gallery", default="gallery/profile_pic_default.png", blank=True, null=True)
+
+	# skills = models.ManyToManyField(Skill, blank=True, null=True)
+	# interests = models.ManyToManyField(Interest, blank=True, null=True)
 
 	def __str__(self):
 		return self.user.username
+
+class Experience(models.Model):
+	created_by = models.ForeignKey(UserProfile, related_name='experience', on_delete=models.CASCADE)
+	title = models.TextField()
+	company = models.TextField(default="none")
+	dates = models.TextField(default="none")
+	description = models.TextField()
+
+	def __str__(self):
+		return self.title 
+
+class Project(models.Model):
+	created_by = models.ForeignKey(UserProfile, related_name='project', on_delete=models.CASCADE)
+	title = models.TextField()
+	company = models.TextField()
+	dates = models.TextField()
+	description = models.TextField()
+
+	def __str__(self):
+		return self.title 
 
 
 
