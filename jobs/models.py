@@ -20,13 +20,13 @@ class Job(models.Model):
             ('IAP', 'iap'),
             ('Spring', 'spring'))
     term = models.CharField(blank=True, choices = TermType, max_length = 10) # select from drop down
-    RequirmentsList = (('C++','c++'),
+    RequirementsList = (('C++','c++'),
                         ('Research', 'research'),
                         ('Python','python'),
                         ('MatLab','matlab'),
                         ('3D Printing','3d printing'))
-    requirments = models.CharField(blank = True, choices = RequirmentsList, max_length = 20)#list from skill tags
-    prefences = models.CharField(blank = True, choices = RequirmentsList, max_length = 20)# list from skill tags
+    requirements = models.CharField(blank = True, choices = RequirementsList, max_length = 20)#list from skill tags
+    preferences = models.CharField(blank = True, choices = RequirementsList, max_length = 20)# list from skill tags
     
     ACTIVE = 'active'
     ARCHIVED = 'archived'
