@@ -25,16 +25,18 @@
                 <div class="d-flex flex-column text-center">
                     <form method="POST" name="form">
                             {% csrf_token %}
-                            {% for field in form %}
-                            <div class="form-group " >
-                                {% for error in field.errors %}
-                                <div class="form-error-text ">{{error}}</div>
-                                {% endfor %}
-                                {% if field.id_for_label == "id_is_recruiter" %}
-                                    {{ field.label }}<br>
-                                {% endif %}
-                                {{ field }}
+                            {% if login_message %}
+                            <div class="form-error-text ">
+                                {{login_message}}
                             </div>
+                            {% endif %}
+                            {% for field in form %}
+                                <div class="form-group " >
+                                    {% for error in field.errors %}
+                                        <div class="form-error-text ">{{error}}</div>
+                                    {% endfor %}
+                                    {{ field }}
+                                </div>
                             {% endfor %}
                 </div>
                 <button type="submit" name="loginbutton" class="btn btn-info btn-block btn-round ">Log In</button>
