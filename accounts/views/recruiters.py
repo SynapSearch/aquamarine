@@ -7,6 +7,9 @@ from jobs.models import Job
 
 @login_required
 def create_profile(request):
+	if RecruiterProfile.objects.filter(user=request.user).exists():
+		return redirect('r_viewprofile')
+		
 	if request.method == 'POST':
 		form = RecruiterProfileForm(request.POST)
 		if form.is_valid():

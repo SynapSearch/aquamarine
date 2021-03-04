@@ -7,8 +7,7 @@ class CreateJobForm(forms.ModelForm):
         fields = [
             'title',
             'description',
-            'location',
-            # 'catagory',
+            'is_remote',
             'term',
             'requirements',
             'preferences'
