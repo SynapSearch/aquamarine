@@ -6,10 +6,14 @@ from django.db import models
 
 @login_required
 def create_profile(request):
+	if StudentProfile.objects.filter(user=request.user).exists():
+		return redirect('s_viewprofile')
+
 	if not Skill.objects.exists():
 		Skill.objects.bulk_create([Skill(name='0'),Skill(name='1'),])
 	if not Interest.objects.exists():
 		Interest.objects.bulk_create([Interest(name='0'),Interest(name='1'),])
+
 	if request.method == 'POST':
 		form = StudentProfileForm(request.POST)
 		if form.is_valid():

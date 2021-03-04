@@ -12,7 +12,6 @@ from jobs.models import Job
 def browse(request):
     ## replace with actual function that has a mathing alg 
     job = Job.objects.filter().first()
-    recruiter = job.created_by
     context = {'job': job}
 
     return render(request, 'browse.html', context)
