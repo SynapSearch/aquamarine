@@ -10,41 +10,35 @@ from jobs.models import Job
 
 @login_required
 def browse(request):
-    if request.user.is_recruiter:
-        ## replace with actual helper function that has a mathing alg 
-        options = StudentProfile.objects.first()
-        exp = Experience.objects.filter(created_by=options.user)
-        project = Project.objects.filter(created_by=options.user)
-        context = {'options': options, 'exp': exp, 'project': project}
-    else:
-        ## replace with actual function that has a mathing alg 
-        options = RecruiterProfile.objects.first()
-        job = Job.objects.filter(created_by=options.user).first()
-        context = {'options': options, 'job': job}
-        print(options)
-        
-    
+    ## replace with actual function that has a mathing alg 
+    job = Job.objects.filter().first()
+    recruiter = job.created_by
+    context = {'job': job}
+
     return render(request, 'browse.html', context)
 
 def r_browse(request, pk):
     ## replace with actual helper function that has a mathing alg 
-    options = StudentProfile.objects.first()
-    exp = Experience.objects.filter(created_by=options.user)
-    project = Project.objects.filter(created_by=options.user)
-    context = {'options': options, 'exp': exp, 'project': project}
+    student = StudentProfile.objects.first()
+    exp = Experience.objects.filter(created_by=student.user)
+    project = Project.objects.filter(created_by=student.user)
+    context = {'student': student, 'exp': exp, 'project': project}
     
     return render(request, 'browse.html', context)
 
-
 def home(request):
+    if request.user.is_authenticated:
+        if request.user.is_recruiter:
+            return redirect('r_viewprofile')
+        return redirect('browse')
+
     return render(request, 'home.html')
 
 def signup(request, *args, **kargs):
     if request.user.is_authenticated:
         if request.user.is_recruiter:
             return redirect('r_viewprofile')
-        else:
-            return redirect('s_viewprofile')
+        return redirect('browse')
 
     if request.method == 'POST':
         form = UserSignupForm(request.POST)
@@ -52,9 +46,8 @@ def signup(request, *args, **kargs):
             user = form.save()
             login(request, user)
             if request.user.is_recruiter:
-                return redirect('r_createprofile')
-            else: 
-                return redirect('s_createprofile')
+                return redirect('r_createprofile') 
+            return redirect('s_createprofile')
     else:
         form = UserSignupForm()
 
@@ -62,6 +55,8 @@ def signup(request, *args, **kargs):
 
 def login_view(request, *args, **kargs):
     if request.user.is_authenticated:
+        if request.user.is_recruiter:
+            return redirect('r_viewprofile')
         return redirect('browse')
 
     if request.method == 'POST':
@@ -69,6 +64,8 @@ def login_view(request, *args, **kargs):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
+            if request.user.is_recruiter:
+                return redirect('r_viewprofile')
             return redirect('browse')
     else:
         form = UserLoginForm()

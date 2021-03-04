@@ -27,11 +27,11 @@
                         <div class="circle ">
                     </center>
                     {% if request.user.is_recruiter %}
-                    <h1 class="pt-3 ">{{options.first_name}} {{options.last_name}}</h1>
-                    <h3>{{options.school}} Class of {{options.gradation_year}}</h3>
+                    <h1 class="pt-3 ">{{student.first_name}} {{student.last_name}}</h1>
+                    <h3>{{student.school}} Class of {{student.graduation_year}}</h3>
                     {% else %}
-                    <h1 class="pt-3 ">{{options.title}}</h1>
-                    <h3>{{options.location}}</h3>
+                    <h1 class="pt-3 ">{{job.title}}</h1>
+                    <h3>{{job.location}}</h3>
                     {% endif %}
                     <p class="pt-1 px-4 text-white text-left ">Skills</p>
                     <div class="container text-left px-4 ">
