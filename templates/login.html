@@ -4,9 +4,18 @@
     .bg {
         background: linear-gradient(#f8f8f8, #fff);
     }
+    .login-header {
+        text-decoration: none;
+        padding: 20px;
+    }
 </style>
 
 <div class="bg">
+    <div class="login-header">
+        <a href="{% url 'browse' %} " >
+            <h1 class="mx-auto my-0 text-uppercase">SynapSearch</h1>
+        </a>
+    </div>
     <div class="modal-dialog modal-dialog-centered " role="document ">
         <div class="modal-content ">
             <div class="modal-body">
