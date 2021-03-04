@@ -1,11 +1,14 @@
-from django.shortcuts import render, redirect
-
-from ..models import UserProfile, RecruiterProfile, StudentProfile, Experience, Project
-from ..forms import UserSignupForm, UserLoginForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
+
+from django.shortcuts import render, redirect
+from django.urls import reverse
+
 from jobs.models import Job
+from ..models import UserProfile, RecruiterProfile, StudentProfile, Experience, Project
+
+from ..forms import UserSignupForm, UserLoginForm
 
 
 @login_required
@@ -30,6 +33,8 @@ def home(request):
     if request.user.is_authenticated:
         if request.user.is_recruiter:
             return redirect('r_viewprofile')
+        elif request.user.is_superuser:
+            return redirect(reverse('admin:index'))
         return redirect('browse')
 
     return render(request, 'home.html')
