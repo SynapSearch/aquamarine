@@ -17,8 +17,9 @@ def create_profile(request):
 	if request.method == 'POST':
 		form = StudentProfileForm(request.POST)
 		if form.is_valid():
-			profile = form.save()
+			profile = form.save(commit=False)
 			profile.user = request.user
+			profile = form.save()
 			skills = request.POST.getlist('skills')
 			interests = request.POST.getlist('interests')
 			for s in skills:
@@ -38,7 +39,11 @@ def create_profile(request):
 
 	interest_list = Interest.objects.all()
 	skill_list = Skill.objects.all()
-	context = {'form':form, 'skill_list':skill_list, 'interest_list': interest_list}
+	context = {
+		'form':form, 
+		'skill_list':skill_list, 
+		'interest_list': interest_list
+	}
 
 	return render(request, 'students/student_create_profile.html', context)
 

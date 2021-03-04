@@ -7,7 +7,7 @@ class Job(models.Model):
     # Default for text feilds - already filled
     #Blank=False --- required field
     #null=False -- databasa
-    created_by = models.ForeignKey(UserProfile, related_name='jobs', on_delete=models.CASCADE)
+    created_by = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     title = models.TextField(blank=False) # set a max
     description = models.TextField(blank=False) # set a max words 
     published = models.DateField(auto_now_add = True)
@@ -23,7 +23,7 @@ class Job(models.Model):
             ('3', 'Spring'))
     term = models.CharField(blank=True, choices = TermType, max_length = 10) # select from drop down
 
-    requirements = models.ManyToManyField(Skill,blank=False, related_name='requirements') #list from skill tags
+    requirements = models.ManyToManyField(Skill,blank=False,related_name='requirements') #list from skill tags
     preferences = models.ManyToManyField(Skill,blank=False,related_name='preferences') # list from skill tags
     
     is_active = models.BooleanField(default = True)

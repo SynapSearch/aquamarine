@@ -44,6 +44,8 @@
         </div>
 
         <div class="form-group">
+            <label>Skills</label>
+            <br>
             {% for skill in skill_list %}
                 {{ skill.get_name_display}}
                 <input type="checkbox" value="{{ skill.name }}" name="skills">
@@ -52,6 +54,8 @@
         </div>
 
         <div class="form-group">
+            <label>Interests</label>
+            <br>
             {% for interest in interest_list %}
                 {{ interest.get_name_display}}
                 <input type="checkbox" value="{{ interest.name }}" name="interests">

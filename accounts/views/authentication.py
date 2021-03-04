@@ -13,6 +13,10 @@ from ..forms import UserSignupForm, UserLoginForm
 
 @login_required
 def browse(request):
+    if request.user.is_recruiter:
+        return redirect('r_viewprofile')
+    elif not request.user.is_authenticated:
+        return redirect('home')
     ## replace with actual function that has a mathing alg 
     job = Job.objects.filter().first()
     context = {'job': job}
