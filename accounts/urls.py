@@ -1,12 +1,13 @@
 from django.urls import path, include
 
-from .views import students, recruiters, authentication
+from .views import students, recruiters, authentication, browse
 
 urlpatterns = [
 	path('signup/', authentication.signup, name="signup"),
 	path('login/', authentication.login_view, name="login"),
-	path('recruiters/browse/<int:pk>/', authentication.r_browse, name='r_browse'),
-	path('browse/', authentication.browse, name='browse'),
+
+	path('recruiters/browse/<int:pk>/', browse.r_browse, name='r_browse'),
+	path('browse/<int:curr>/', browse.browse, name='browse'),
 	
 	path('recruiters/profile/', recruiters.view_profile, name='r_viewprofile'),
 	path('recruiters/profile/create/', recruiters.create_profile, name='r_createprofile'),

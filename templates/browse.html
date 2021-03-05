@@ -87,7 +87,9 @@
                             {{p.description}}
                         </div>
                     </div>
-                    {% endfor %} {% else %}
+                    {% endfor %} 
+
+                    {% else %}
                     <div class="text-left ">
                         <h5 class="pt-2 font-weight-bold ">{{job.title}}</h5>
                         <h6>{{job.published}}</h6>
@@ -112,10 +114,14 @@
         <!-- <div><span class="more-info ">Mouse over the card for more info</span> -->
     </div>
     </div>
-    <center>
-        <div><button type="button " class="btn btn-circle btn-lg grey px-2 "><i class="fa fa-undo "></i></button><button type="button " class="btn btn-circle btn-lg red "><i class="fa fa-times "></i></button><button type="button " class="btn btn-circle
-                                btn-lg yellow "><span class="tilde ">&#126;
-    </span></button><button type="button " class="btn btn-circle btn-lg green "><i class="fa fa-check "></i></button></div>
-    </center>
-    </div>
+    <form method="POST" action="{% url 'browse' curr %}"name="">
+        {% csrf_token %}
+        <button type="submit" name="submit" value="accepted" class="btn btn-info btn-block btn-round">Yes</button>
+        <button type="submit" name="submit" value="rejected" class="btn btn-info btn-block btn-round " >No</button>
+        <!-- <center>
+            <div><button type="button" value="nothing" class="btn btn-circle btn-lg grey px-2 "><i class="fa fa-undo "></i></button><button type="button " value="rejected" class="btn btn-circle btn-lg red "><i class="fa fa-times "></i></button><button type="button " class="btn btn-circle
+                                    btn-lg yellow "><span class="tilde ">&#126;
+        </span></button><button type="button " name="accepted" class="btn btn-circle btn-lg green "><i class="fa fa-check "></i></button></div>
+        </center> -->
+    </form>
 </body> {% endblock content %}

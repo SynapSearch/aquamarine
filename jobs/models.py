@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.models import UserProfile, Skill
+from accounts.models import UserProfile, StudentProfile, Skill
 
 class Job(models.Model):
     # django has lots of different type of model fields
@@ -27,6 +27,8 @@ class Job(models.Model):
     preferences = models.ManyToManyField(Skill,blank=False,related_name='preferences') # list from skill tags
     
     is_active = models.BooleanField(default = True)
+
+    students_who_swiped_yes = models.ManyToManyField(StudentProfile)
 
     def __str__(self):
         return self.title
