@@ -18,6 +18,7 @@ from django.urls import path, include
 from django.contrib.auth import views
 
 from accounts.views.authentication import *
+from accounts.views.browse import home
 from jobs.views import create_jobs, edit_jobs
 from . import settings
 from django.contrib.staticfiles.urls import static

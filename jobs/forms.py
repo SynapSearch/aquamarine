@@ -9,6 +9,4 @@ class CreateJobForm(forms.ModelForm):
             'description',
             'is_remote',
             'term',
-            'requirements',
-            'preferences'
             ]

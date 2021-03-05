@@ -1,43 +1,17 @@
-from django.shortcuts import render, redirect
-
-from ..models import UserProfile, RecruiterProfile, StudentProfile, Experience, Project
-from ..forms import UserSignupForm, UserLoginForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.decorators import login_required
-from jobs.models import Job
 
+from django.shortcuts import render, redirect
+from django.urls import reverse
 
-@login_required
-def browse(request):
-    ## replace with actual function that has a mathing alg 
-    job = Job.objects.filter().first()
-    context = {'job': job}
-
-    return render(request, 'browse.html', context)
-
-def r_browse(request, pk):
-    ## replace with actual helper function that has a mathing alg 
-    student = StudentProfile.objects.first()
-    exp = Experience.objects.filter(created_by=student.user)
-    project = Project.objects.filter(created_by=student.user)
-    context = {'student': student, 'exp': exp, 'project': project}
-    
-    return render(request, 'browse.html', context)
-
-def home(request):
-    if request.user.is_authenticated:
-        if request.user.is_recruiter:
-            return redirect('r_viewprofile')
-        return redirect('browse')
-
-    return render(request, 'home.html')
+from ..models import UserProfile
+from ..forms import UserSignupForm, UserLoginForm
 
 def signup(request, *args, **kargs):
     if request.user.is_authenticated:
         if request.user.is_recruiter:
             return redirect('r_viewprofile')
-        return redirect('browse')
+        return redirect('browse', 0)
 
     if request.method == 'POST':
         form = UserSignupForm(request.POST)
@@ -56,7 +30,7 @@ def login_view(request, *args, **kargs):
     if request.user.is_authenticated:
         if request.user.is_recruiter:
             return redirect('r_viewprofile')
-        return redirect('browse')
+        return redirect('browse', 0)
 
     if request.method == 'POST':
         form = UserLoginForm(data=request.POST)
@@ -65,9 +39,12 @@ def login_view(request, *args, **kargs):
             login(request, user)
             if request.user.is_recruiter:
                 return redirect('r_viewprofile')
-            return redirect('browse')
+
+            return redirect('browse', 0)
+          
         else:
             return render(request, 'login.html', {'login_message': "Username or password is incorrect.", 'form': form})
+
     else:
         form = UserLoginForm()
 
