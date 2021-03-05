@@ -40,6 +40,12 @@ def login_view(request, *args, **kargs):
             if request.user.is_recruiter:
                 return redirect('r_viewprofile')
             return redirect('browse', 0)
+        else: 
+            return render(
+                request, 
+                'login.html', 
+                {'login_message': "Username or password is incorrect.",
+                 'form': form})
     else:
         form = UserLoginForm()
 
