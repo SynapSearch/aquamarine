@@ -198,7 +198,7 @@
         {% else %}
         <a class="text-white navbar-brand" href="{% url 's_viewprofile' %} ">My Profile</a>
         <div class="d-flex">
-            <form class="form-inline pt-3" action="#" method="get">
+            <form class="form-inline pt-3" action="{% url 'search_results' %}" method="get">
                 <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-1 ">
                     <i class="fa fa-search "></i>
                     <input name="q" size="50" type=" text " placeholder="Search... " class="form-control border-0 bg-light mr-sm-3">

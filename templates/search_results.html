@@ -1,0 +1,82 @@
+{% extends 'nav_bar.html' %} {% block content %}
+
+
+<h1 class="px-5 pt-4">Jobs Matching Search</h1>
+
+{% if not jobs%}
+<div style="margin-left: 50px">
+    <h4 class="px-3 pt-4 pb-4 "> Nothing matching search</h4>
+</div>
+
+{% else %}
+<div style="margin-left: 50px">{% for j in jobs %}
+
+    <div class="col-md-6 ">
+        <div class="cards ">
+            <div class="row no-gutters border rounded flex-md-row mb-4 shadow-sm h-md-250 ">
+
+                <div class="col p-4 d-flex flex-column position-static ">
+                    <h3 class="my-1 ">{{j.title}}
+                    </h3>
+                    <div style="display:flex ">
+                        {% for tag in j.requirements.all %}
+                        <div class="mr-1 badge badge-info ">#{{ tag.get_name_display }}</div>
+                        {% endfor %}
+                    </div>
+                    <p class="mb-auto pt-2 ">{{j.description}}</p>
+                    <p class="mb-auto text-muted pb-0 ">{{j.published}}</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+</p>{% endif %}
+
+<h1 class="px-5 pt-4 ">Labs Matching Search</h1>
+
+
+{% if not labs%}
+<div style="margin-left: 50px">
+    <h4 class="px-3 pt-4 pb-4 "> Nothing matching search</h4>
+</div>
+{% else %}
+<div style="margin-left: 50px">{% for l in labs %}
+    <div class="col-md-6 ">
+
+        <div class="cards ">
+
+            <div class="row no-gutters border rounded flex-md-row mb-4 shadow-sm h-md-250 ">
+                <div class="col p-4 d-flex flex-column position-static ">
+                    <h3 class="my-1 ">{{l.title}}
+                    </h3>
+                    <p class="mb-auto pt-2 ">{{l.description}}</p>
+                    <p class="mb-auto text-muted pb-0 ">{{l.location}}</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {% endfor %} {% endif %}
+</div>
+
+</div>
+</head>
+<br>
+<br>
+
+<body>
+
+    <div class="row mb-2 posts ">
+
+    </div>
+</body>
+</div>
+
+
+
+{% endblock content %}

@@ -1,4 +1,4 @@
-{% extends 'base_jobs.html' %} {% block content %}
+{% extends 'nav_bar.html' %} {% block content %}
 
 <body class='bg-light text-black-50'></body>
 <div class="div-light-blue-col ">
@@ -55,12 +55,14 @@
                 <div class="cards ">
 
                     <div class="row no-gutters border rounded flex-md-row mb-4 shadow-sm h-md-250 ">
-
-
-
                         <div class="col p-4 d-flex flex-column position-static ">
                             <h3 class="my-1 ">{{j.title}}
                             </h3>
+                            <div style="display:flex">
+                                {% for tag in j.requirements.all %}
+                                <div class="mr-1 badge badge-info">#{{ tag.get_name_display }}</div>
+                                {% endfor %}
+                            </div>
                             <p class="mb-auto pt-2">{{j.description}}</p>
                             <p class="mb-auto text-muted pb-0">{{j.published}}</p>
 
@@ -69,7 +71,7 @@
                             <p>
                                 <a href="{% url 'editjob' j.pk %}"> Edit</a>
                                 <span style="padding-left:20px;"></span>
-                                <a href="{% url 'r_browse' j.pk %}"> Recruit </a>
+                                <a href="{% url 'r_browse' j.pk 0 %}"> Recruit </a>
                             </p>
                         </div>
                     </div>
