@@ -9,6 +9,7 @@ def browse(request, curr=0):
     if Job.objects.count() == 0:
         return redirect('out_of_range')
 
+
     if request.user.is_recruiter:
         return redirect('r_viewprofile')
         
@@ -45,6 +46,7 @@ def r_browse(request, pk, curr_student=0):
 
     if student_array.count() == 0:
         return redirect('out_of_range')
+
 
     if curr_student != 0:
         last_student = student_array[curr_student-1]
