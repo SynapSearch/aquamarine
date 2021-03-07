@@ -2,7 +2,6 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 
 from django.shortcuts import render, redirect
-from django.urls import reverse
 
 from ..models import UserProfile
 from ..forms import UserSignupForm, UserLoginForm

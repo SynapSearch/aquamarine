@@ -55,9 +55,6 @@
                 <div class="cards ">
 
                     <div class="row no-gutters border rounded flex-md-row mb-4 shadow-sm h-md-250 ">
-
-
-
                         <div class="col p-4 d-flex flex-column position-static ">
                             <h3 class="my-1 ">{{j.title}}
                             </h3>
@@ -69,7 +66,7 @@
                             <p>
                                 <a href="{% url 'editjob' j.pk %}"> Edit</a>
                                 <span style="padding-left:20px;"></span>
-                                <a href="{% url 'r_browse' j.pk %}"> Recruit </a>
+                                <a href="{% url 'r_browse' j.pk 0 %}"> Recruit </a>
                             </p>
                         </div>
                     </div>

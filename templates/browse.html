@@ -112,7 +112,11 @@
             <!-- <div><span class="more-info ">Mouse over the card for more info</span> -->
         </div>
     </div>
-    <form method="POST" action="{% url 'browse' curr %}" name="">
+    {% if not request.user.is_recruiter %}
+    <form method="POST" action="{% url 'browse' curr %}"name="">
+    {% else %}
+    <form method="POST" action="{% url 'r_browse' curr_pk curr_student %}" name="">
+    {% endif %}
         {% csrf_token %}
         <center>
             <div><button type="submit" name="submit" value="back" class="btn btn-circle btn-lg grey px-2 "><i class="fa fa-undo "></i></button>
@@ -121,4 +125,5 @@
                 <button type="submit" name="submit" value="accepted" class="btn btn-circle btn-lg green "><i class="fa fa-check "></i></button></div>
         </center>
     </form>
+
 </body> {% endblock content %}
