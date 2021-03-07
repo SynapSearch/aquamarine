@@ -1,6 +1,19 @@
 from django.db import models
 from accounts.models import UserProfile, StudentProfile, Skill
 
+class Compensation(models.Model):
+    CHOICES = (
+        ('0', 'ELO'),
+        ('1', 'Volunteer'),
+        ('2', 'Credit'),
+        ('3', 'Direct Funding'),
+        ('4', 'Sponsored Funding'),
+        )
+    name = models.CharField(max_length=50, choices=CHOICES)
+
+    def __str__(self):
+        return self.name
+
 class Job(models.Model):
     # django has lots of different type of model fields
     # Had differenet required fields - max chars, digits etc 
@@ -30,6 +43,8 @@ class Job(models.Model):
 
     students_who_swiped_yes = models.ManyToManyField(StudentProfile,related_name='students_who_swiped_yes')
     students_accepted_by_recruiter = models.ManyToManyField(StudentProfile,related_name='students_accepted_by_recruiter')
+
+    compensation_types = models.ManyToManyField(Compensation)
 
     def __str__(self):
         return self.title
