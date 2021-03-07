@@ -7,7 +7,7 @@ from django.urls import reverse
 @login_required
 def browse(request, curr=0):
     if Job.objects.count() == 0:
-        return redirect('s_viewprofile')
+        return redirect('out_of_range')
 
     if request.user.is_recruiter:
         return redirect('r_viewprofile')
@@ -26,7 +26,7 @@ def browse(request, curr=0):
             last_job.students_who_swiped_yes.add(student)
 
     if curr == Job.objects.count():
-        return redirect('s_viewprofile')
+        return redirect('out_of_range')
     
     job = job_array[curr]
     curr = curr + 1
@@ -44,7 +44,7 @@ def r_browse(request, pk, curr_student=0):
     student_array = job.students_who_swiped_yes.all()
 
     if student_array.count() == 0:
-        return redirect('r_viewprofile')
+        return redirect('out_of_range')
 
     if curr_student != 0:
         last_student = student_array[curr_student-1]
@@ -57,7 +57,7 @@ def r_browse(request, pk, curr_student=0):
 
 
     if curr_student == student_array.count():
-        return redirect('r_viewprofile')
+        return redirect('out_of_range')
 
     student = student_array[curr_student]
     curr_student = curr_student + 1
@@ -79,3 +79,7 @@ def home(request):
         return redirect('browse', 0)
 
     return render(request, 'home.html')
+
+
+def out_of_range(request):
+    return render(request, "out_of_range.html")
