@@ -28,7 +28,8 @@ class Job(models.Model):
     
     is_active = models.BooleanField(default = True)
 
-    students_who_swiped_yes = models.ManyToManyField(StudentProfile)
+    students_who_swiped_yes = models.ManyToManyField(StudentProfile,related_name='students_who_swiped_yes')
+    students_accepted_by_recruiter = models.ManyToManyField(StudentProfile,related_name='students_accepted_by_recruiter')
 
     def __str__(self):
         return self.title
