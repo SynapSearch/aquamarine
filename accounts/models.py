@@ -12,7 +12,7 @@ class RecruiterProfile(models.Model):
 	title = models.CharField(max_length=150)
 	description = models.TextField()
 	location = models.CharField(max_length=150)
-	picture = models.ImageField(upload_to="gallery", default="gallery/profile_pic_default.png", blank=True)
+	picture = models.ImageField(upload_to="media/gallery", default="gallery/profile_pic_default.png", blank=True)
 
 	def __str__(self):
 		return self.user.username
@@ -47,19 +47,26 @@ class StudentProfile(models.Model):
 	graduation_year = models.IntegerField()
 	major = models.CharField(max_length=100)
 
-	picture = models.ImageField(upload_to="gallery", default="gallery/profile_pic_default.png", blank=True, null=True)
-
+	picture = models.ImageField(upload_to="media", default="gallery/profile_pic_default.png", blank=True, null=True)
 	skills = models.ManyToManyField(Skill)
 	interests = models.ManyToManyField(Interest)
 
 	def __str__(self):
 		return self.user.username
 
+class Involvement(models.Model):
+	created_by = models.ForeignKey(UserProfile, related_name='involvement', on_delete=models.CASCADE)
+	position = models.CharField(max_length=100)
+	orginzation = models.CharField(max_length=100)
+
+	def __str__(self):
+		return self.title 
+
 class Experience(models.Model):
 	created_by = models.ForeignKey(UserProfile, related_name='experience', on_delete=models.CASCADE)
-	title = models.TextField()
-	company = models.TextField(default="none")
-	dates = models.TextField(default="none")
+	title = models.CharField(max_length=100)
+	company = models.CharField(max_length=100)
+	dates = models.CharField(max_length=100)
 	description = models.TextField()
 
 	def __str__(self):
@@ -67,9 +74,9 @@ class Experience(models.Model):
 
 class Project(models.Model):
 	created_by = models.ForeignKey(UserProfile, related_name='project', on_delete=models.CASCADE)
-	title = models.TextField()
-	company = models.TextField()
-	dates = models.TextField()
+	title = models.CharField(max_length=100)
+	company = models.CharField(max_length=100)
+	dates = models.CharField(max_length=100)
 	description = models.TextField()
 
 	def __str__(self):

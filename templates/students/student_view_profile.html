@@ -22,46 +22,34 @@
                     <h1 class="pt-3 "> {{profile.first_name}} {{profile.last_name}}</h1>
                     <h3>{{profile.school}} Class of {{profile.graduation_year}}</h3>
                     <h3> {{profile.major}} </h3>
+                    <div class="text-right px-3 ">
+                        <a href="{% url 's_edit_skills' %} "> Edit </a>
+                    </div>
                     <p class="pt-1 px-4 text-white text-left ">Skills</p>
+
                     <div class="container text-left px-4 ">
-                        <!-- Skills list -->
-                        <li>
-                            C++
-                        </li>
-                        <li>
-                            Python
-                        </li>
-                        <li>
-                            HTML & CSS
-                        </li>
-                        <li>
-                            R
-                        </li>
-                        <li>
-                            PCR
-                        </li>
-                        <li>
-                            Flow Cytometry
-                        </li>
-                        <li>
-                            Immunomagnetic Seperation
-                        </li>
-                        <li>
-                            Mouse Handling,Injections, Disections
-                        </li>
+                        {% for s in profile.skills.all %}
+                        <li>{{s.get_name_display}} </li> {% endfor %}
+                    </div>
+                    <p class="pt-1 px-4 text-white text-left ">Interests</p>
+
+                    <div class="container text-left px-4 ">
+                        {% for i in profile.interests.all %}
+                        <li>{{i.get_name_display}} </li> {% endfor %}
                     </div>
                     <div class="text-left px-4 ">
+                        <p>
+                            <div class="text-right px-3 ">
+                                <a href="{% url 's_createin' %} "> Add </a>
+                            </div>
+                        </p>
                         <p class="pt-1 text-white ">Involvement</p>
-                        <!-- Skills list -->
-                        <li>
-                            TA, MIT's Office of Engineering Outreach Programs
-                        </li>
-                        <li>
-                            Web Masters, Sigma Kappy Theda Lambda Chapter
-                        </li>
-                        <li>
-                            Member, Daughters of the American Revolution
-                        </li>
+                        {% for i in involvement %}
+                        <div class="text-right">
+                            <a href="{% url 's_editin' i.pk %}"> Edit</a>
+                        </div>
+                        <li>{{i.position}}, {{i.orginzation}}</li>
+                        {% endfor %}
 
                     </div>
                 </div>
