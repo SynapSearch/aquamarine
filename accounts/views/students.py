@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from ..models import UserProfile, StudentProfile, Project, Experience, Skill, Interest
-from ..forms import StudentProfileForm, ProjectForm, ExperienceForm
+from ..models import UserProfile, StudentProfile, Project, Experience, Skill, Interest, Involvement
+from ..forms import StudentProfileForm, ProjectForm, ExperienceForm, InvolvementForm
 from django.db import models
 
 @login_required
@@ -52,7 +52,10 @@ def view_profile(request):
 	profile = get_object_or_404(StudentProfile, user=request.user)
 	exp = Experience.objects.filter(created_by=request.user)
 	project = Project.objects.filter(created_by=request.user)
-	return render(request, 'students/student_view_profile.html', {'profile':profile, 'exp':exp, 'project':project})
+	involvement = Involvement.objects.filter(created_by=request.user)
+	skills = profile.skills
+	print(skills)
+	return render(request, 'students/student_view_profile.html', {'profile':profile, 'exp':exp, 'project':project, "involvement": involvement, "skill": skills})
 
 @login_required
 def edit_profile(request):
@@ -125,3 +128,59 @@ def edit_project(request, pk):
 		form = ProjectForm(instance=project)
 
 	return render(request, 'students/student_edit_project.html', {'form':form})
+
+
+@login_required
+def create_involvement(request):
+	form = InvolvementForm(request.POST)
+	if form.is_valid():
+		new_invol = form.save(commit=False)
+		new_invol.created_by = request.user
+		new_invol.save()
+		return redirect('s_viewprofile')
+
+	context = {
+		'form': form,
+	}
+	return render(request, "students/student_create_involvement.html", context)
+
+@login_required
+def edit_involvement(request, pk):
+	invol = get_object_or_404(Involvement, pk=pk)
+	if request.method == 'POST':
+		form = InvolvementForm(request.POST, instance=invol)
+		if form.is_valid():
+			invol = form.save()
+			invol.save()
+			return redirect('s_viewprofile')
+	else:
+		form = InvolvementForm(instance=invol)
+
+	return render(request, 'students/student_edit_involvement.html', {'form':form})
+
+
+@login_required
+def edit_skills(request):
+	if request.method == 'POST':
+		profile = get_object_or_404(StudentProfile, user=request.user)
+
+		skills = request.POST.getlist('skills')
+		interests = request.POST.getlist('interests')
+		for s in skills:
+			s = Skill.objects.get_or_create(name=s)[0]
+			s.save()
+			profile.skills.add(s)
+		for i in interests:
+			i = Interest.objects.get_or_create(name=i)[0]
+			i.save()
+			profile.interests.add(i)
+		profile.save()
+		return redirect('s_viewprofile')
+	interest_list = Interest.objects.all()
+	skill_list = Skill.objects.all()
+	context = { 
+		'skill_list':skill_list, 
+		'interest_list': interest_list
+	}
+
+	return render(request, 'students/student_edit_skills.html', context)

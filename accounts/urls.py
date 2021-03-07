@@ -21,4 +21,7 @@ urlpatterns = [
 	path('students/profile/edit/create/project', students.create_project, name='s_createproject'),
 	path('students/profile/edit/expirence/edit/<int:pk>/', students.edit_experience, name='editexp'),
 	path('students/profile/edit/project/edit/<int:pk>/', students.edit_project, name='editproject'),
+	path('students/profile/edit/create/involvement', students.create_involvement, name ="s_createin"),
+	path('students/profile/edit/involvement/edit/<int:pk>/', students.edit_involvement, name ="s_editin"),
+	path('students/profile/edit/skills/', students.edit_skills, name ="s_edit_skills")
 ]

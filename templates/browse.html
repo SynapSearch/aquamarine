@@ -36,38 +36,38 @@
                     <p class="pt-1 px-4 text-white text-left ">Skills</p>
                     <div class="container text-left px-4 ">
                         <!-- Skills list -->
-                        <li>C++</li>
+                        {% for s in student.skills.all%}
+                        <li>{{s.get_name_display}} </li> {% endfor %}
+                        <!-- <li>C++</li>
                         <li>Python </li>
                         <li>HTML & CSS </li>
                         <li>R </li>
                         <li>PCR </li>
                         <li>Flow Cytometry </li>
                         <li>Immunomagnetic Seperation </li>
-                        <li>Mouse Handling, Injections, Disections </li>
+                        <li>Mouse Handling, Injections, Disections </li> -->
                     </div>
                     <div class="text-left px-4 ">
                         <p class="pt-1 text-white ">Involvement</p>
-                        <!-- Skills list -->
-                        <li>TA, MIT's Office of Engineering Outreach Programs
-                        </li>
+                        <li>TA, MIT's Office of Engineering Outreach Programs </li>
                         <li>Web Masters, Sigma Kappy Theda Lambda Chapter </li>
                         <li>Member, Daughters of the American Revolution </li>
                     </div>
-                </div>
-                <!-- <div class="more-info "></div> -->
-                <div class="general ">
-                    {% if request.user.is_recruiter %}
-                    <h2>Experience</h2>
-                    {% for e in exp %}
-                    <div class="text-left ">
-                        <h5 class="pt-2 font-weight-bold ">{{e.title}}</h5>
-                        <h6>{{e.company}}</h6>
-                        <p>{{e.dates}}</p>
-                        <div class="small ">
-                            {{e.description}}
-                        </div>
-                        {% endfor %}
-                        <!-- <h5 class="pt-2 font-weight-bold ">UROP</h5>
+                    </div>
+                    <!-- <div class="more-info "></div> -->
+                    <div class="general ">
+                        {% if request.user.is_recruiter %}
+                        <h2>Experience</h2>
+                        {% for e in exp %}
+                        <div class="text-left ">
+                            <h5 class="pt-2 font-weight-bold ">{{e.title}}</h5>
+                            <h6>{{e.company}}</h6>
+                            <p>{{e.dates}}</p>
+                            <div class="small ">
+                                {{e.description}}
+                            </div>
+                            {% endfor %}
+                            <!-- <h5 class="pt-2 font-weight-bold ">UROP</h5>
                         <h6>Koch Institute of Integrative Cancer Research, Spranger Lab
                         </h6>
                         <p>Summer 2020 - Fall 2020</p>
@@ -75,28 +75,26 @@
                             flow cytometry. Perform RNA-Seq analysis on single cell data observing expression differences between different tissue types and their responses to immune blocking therapy.
                         </div> -->
 
-                        <h2 class="text-center pt-3 ">Projects</h2>
-                        {% for p in project %}
+                            <h2 class="text-center pt-3 ">Projects</h2>
+                            {% for p in project %}
 
-                        <h5 class="pt-2 font-weight-bold ">{{p.title}}
-                        </h5>
-                        <h6>{{p.company}}
-                        </h6>
-                        <p>{{p.dates}}</p>
-                        <div class="small ">
-                            {{p.description}}
+                            <h5 class="pt-2 font-weight-bold ">{{p.title}}
+                            </h5>
+                            <h6>{{p.company}}
+                            </h6>
+                            <p>{{p.dates}}</p>
+                            <div class="small ">
+                                {{p.description}}
+                            </div>
                         </div>
-                    </div>
-                    {% endfor %} 
+                        {% endfor %} {% else %}
+                        <div class="text-left ">
+                            <h5 class="pt-2 font-weight-bold ">{{job.title}}</h5>
+                            <h6>{{job.published}}</h6>
+                            <p>{{job.location}}</p>
 
-                    {% else %}
-                    <div class="text-left ">
-                        <h5 class="pt-2 font-weight-bold ">{{job.title}}</h5>
-                        <h6>{{job.published}}</h6>
-                        <p>{{job.location}}</p>
-
-                        {{job.description}}
-                        <!-- <h5 class="pt-2 font-weight-bold ">UROP</h5>
+                            {{job.description}}
+                            <!-- <h5 class="pt-2 font-weight-bold ">UROP</h5>
                         <h6>Koch Institute of Integrative Cancer Research, Spranger Lab
                         </h6>
                         <p>Summer 2020 - Fall 2020</p>
@@ -104,24 +102,23 @@
                             flow cytometry. Perform RNA-Seq analysis on single cell data observing expression differences between different tissue types and their responses to immune blocking therapy.
                         </div> -->
 
+                        </div>
+                        {% endif %}
+
+
                     </div>
-                    {% endif %}
-
-
                 </div>
             </div>
+            <!-- <div><span class="more-info ">Mouse over the card for more info</span> -->
         </div>
-        <!-- <div><span class="more-info ">Mouse over the card for more info</span> -->
     </div>
-    </div>
-    <form method="POST" action="{% url 'browse' curr %}"name="">
+    <form method="POST" action="{% url 'browse' curr %}" name="">
         {% csrf_token %}
-        <button type="submit" name="submit" value="accepted" class="btn btn-info btn-block btn-round">Yes</button>
-        <button type="submit" name="submit" value="rejected" class="btn btn-info btn-block btn-round " >No</button>
-        <!-- <center>
-            <div><button type="button" value="nothing" class="btn btn-circle btn-lg grey px-2 "><i class="fa fa-undo "></i></button><button type="button " value="rejected" class="btn btn-circle btn-lg red "><i class="fa fa-times "></i></button><button type="button " class="btn btn-circle
-                                    btn-lg yellow "><span class="tilde ">&#126;
-        </span></button><button type="button " name="accepted" class="btn btn-circle btn-lg green "><i class="fa fa-check "></i></button></div>
-        </center> -->
+        <center>
+            <div><button type="submit" name="submit" value="back" class="btn btn-circle btn-lg grey px-2 "><i class="fa fa-undo "></i></button>
+                <button type="submit" name="submit" value="rejected" class="btn btn-circle btn-lg red "><i class="fa fa-times "></i></button> {% if request.user.is_recruiter %}
+                <button type="submit" name="submit" class="btn btn-circle btn-lg yellow "><span class="tilde ">&#126;</span></button> {% endif %}
+                <button type="submit" name="submit" value="accepted" class="btn btn-circle btn-lg green "><i class="fa fa-check "></i></button></div>
+        </center>
     </form>
 </body> {% endblock content %}
