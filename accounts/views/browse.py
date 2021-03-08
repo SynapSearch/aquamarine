@@ -29,9 +29,12 @@ def browse(request, curr=0):
     if curr == Job.objects.count():
         return redirect('out_of_range')
     
+    
+    
     job = job_array[curr]
+    recruiter = RecruiterProfile.objects.get(user=job.created_by)
     curr = curr + 1
-    context = {'job': job, "curr":curr}
+    context = {'job': job, "curr":curr, 'recruiter':recruiter}
 
     return render(request, 'browse.html', context)
 

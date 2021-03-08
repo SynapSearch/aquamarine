@@ -10,7 +10,7 @@
 
     <br>
     <br>
-    <form method="POST" action="">
+    <form method="POST" action="" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group">
             <label>Title</label>
@@ -25,7 +25,12 @@
             <label>Location</label>
             <br> {{form.location}}
         </div>
-        <button type="submit" class="btn btn-primary ">Submit</button>
+
+        <div class="form-group">
+            <label>Profile Picture</label>
+            <br> {{form.picture}}
+        </div>
+        <button type="submit" class="btn btn-primary" value="Upload">Submit</button>
     </form>
 </div>
 
