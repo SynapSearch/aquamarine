@@ -1,0 +1,79 @@
+{% extends 'nav_bar.html' %} {% block content %}
+<div class="div-padding">
+
+    <head>
+
+        <h1>Edit Job
+            <a href="{% url 'r_viewprofile' %}">
+                <i class="fa fa-home fa-pull-right"></i>
+            </a>
+        </h1>
+    </head>
+
+    <br>
+    <br>
+<form method="POST">
+        {% csrf_token %} 
+        <div class="form-group">
+            <label>Title</label>
+            <br>
+            <input type="text" size="50" name="title" value="{{job.title}}">
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <br>
+            <input type="text" size="50" name="description" value="{{job.description}}">
+        </div>
+        <div class="form-group">
+            <label>Is the job remote?</label>
+            <br>
+            <input type="checkbox" size="50" name="is_remote" {% if job.is_remote %}checked{% endif %}>
+        </div>
+        <div class="form-group">
+            <label>Enter the job term:</label>
+            <br>
+            {{form.term}}
+        </div>
+        <div class="form-group">
+            <label>Job requirements:</label>
+            <br>
+            {% for r in requirements_list %}
+                {{ r.get_name_display}}
+                <input type="checkbox" value="{{ r.name }}" name="requirements">
+                <br>
+            {% endfor %}
+        </div>
+        <div class="form-group">
+            <label>Job preferences:</label>
+            <br>
+            {% for p in preferences_list %}
+                {{ p.get_name_display}}
+                <input type="checkbox" value="{{ p.name }}" name="preferences">
+                <br>
+            {% endfor %}
+        </div>
+        <div class="form-group">
+            <label>Job Compensation Type:</label>
+            <br>
+            {% for i in compensation_list %}
+                {{i.get_name_display}}
+                <input type="checkbox" name="compensation_types"id="{{i}}" value="{{i.name}}">
+                {% for j in compensations_saved %}
+                    {% if i == j %}
+                    <script>
+                        document.getElementById("{{i}}").checked = true;
+                    </script>
+                    {% endif %}
+                {% endfor %}
+                <br>
+            {% endfor %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+</body>
+</div>
+
+{% endblock content %}
