@@ -58,6 +58,11 @@
                         <div class="col p-4 d-flex flex-column position-static ">
                             <h3 class="my-1 ">{{j.title}}
                             </h3>
+                            <div style="display:flex">
+                                {% for tag in j.requirements.all %}
+                                <div class="mr-1 badge badge-info">#{{ tag.get_name_display }}</div>
+                                {% endfor %}
+                            </div>
                             <p class="mb-auto pt-2">{{j.description}}</p>
                             <p class="mb-auto text-muted pb-0">{{j.published}}</p>
 

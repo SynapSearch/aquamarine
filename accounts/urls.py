@@ -8,6 +8,7 @@ urlpatterns = [
 
 	path('recruiters/browse/<int:pk>/<int:curr_student>/', browse.r_browse, name='r_browse'),
 	path('browse/<int:curr>/', browse.browse, name='browse'),
+	path('end/', browse.out_of_range, name='out_of_range'),
 	
 	path('recruiters/profile/', recruiters.view_profile, name='r_viewprofile'),
 	path('recruiters/profile/create/', recruiters.create_profile, name='r_createprofile'),
@@ -16,6 +17,7 @@ urlpatterns = [
 	path('students/profile/', students.view_profile, name='s_viewprofile'),
 	path('students/profile/create', students.create_profile, name='s_createprofile'),
 	path('students/profile/edit', students.edit_profile, name='s_editprofile'),
+	path('search/', students.search_results, name='search_results'),
 
 	path('students/profile/edit/create/expirence', students.create_experience, name='s_createexp'),
 	path('students/profile/edit/create/project', students.create_project, name='s_createproject'),

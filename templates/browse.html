@@ -29,32 +29,23 @@
                     {% if request.user.is_recruiter %}
                     <h1 class="pt-3 ">{{student.first_name}} {{student.last_name}}</h1>
                     <h3>{{student.school}} Class of {{student.graduation_year}}</h3>
+                    <p class="pt-1 px-4 text-white text-left ">Skills</p>
+                    <div class="container text-left px-4 ">
+                        {% for s in student.skills.all%}
+                        <li>{{s.get_name_display}} </li> {% endfor %}
+                    </div>
+                    <div class="text-left px-4 ">
+                        <p class="pt-1 text-white ">Involvement</p>
+                        {% for i in involvement %}
+                        <li>{{i.position}}, {{i.orginzation}}</li>
+                        {% endfor %}
+                    </div>
                     {% else %}
                     <h1 class="pt-3 ">{{job.title}}</h1>
                     <h3>{{job.location}}</h3>
                     {% endif %}
-                    <p class="pt-1 px-4 text-white text-left ">Skills</p>
-                    <div class="container text-left px-4 ">
-                        <!-- Skills list -->
-                        {% for s in student.skills.all%}
-                        <li>{{s.get_name_display}} </li> {% endfor %}
-                        <!-- <li>C++</li>
-                        <li>Python </li>
-                        <li>HTML & CSS </li>
-                        <li>R </li>
-                        <li>PCR </li>
-                        <li>Flow Cytometry </li>
-                        <li>Immunomagnetic Seperation </li>
-                        <li>Mouse Handling, Injections, Disections </li> -->
+
                     </div>
-                    <div class="text-left px-4 ">
-                        <p class="pt-1 text-white ">Involvement</p>
-                        <li>TA, MIT's Office of Engineering Outreach Programs </li>
-                        <li>Web Masters, Sigma Kappy Theda Lambda Chapter </li>
-                        <li>Member, Daughters of the American Revolution </li>
-                    </div>
-                    </div>
-                    <!-- <div class="more-info "></div> -->
                     <div class="general ">
                         {% if request.user.is_recruiter %}
                         <h2>Experience</h2>
@@ -67,13 +58,7 @@
                                 {{e.description}}
                             </div>
                             {% endfor %}
-                            <!-- <h5 class="pt-2 font-weight-bold ">UROP</h5>
-                        <h6>Koch Institute of Integrative Cancer Research, Spranger Lab
-                        </h6>
-                        <p>Summer 2020 - Fall 2020</p>
-                        <div class="small ">Research in the Spranger lab focused on solid tumor immunology and computational biological analysis. Aid in day to day lab activities such as cell culture, mouse handling, immunological assays, staining and flowing of cells via
-                            flow cytometry. Perform RNA-Seq analysis on single cell data observing expression differences between different tissue types and their responses to immune blocking therapy.
-                        </div> -->
+
 
                             <h2 class="text-center pt-3 ">Projects</h2>
                             {% for p in project %}
@@ -112,18 +97,20 @@
             <!-- <div><span class="more-info ">Mouse over the card for more info</span> -->
         </div>
     </div>
+
+
     {% if not request.user.is_recruiter %}
-    <form method="POST" action="{% url 'browse' curr %}"name="">
-    {% else %}
-    <form method="POST" action="{% url 'r_browse' curr_pk curr_student %}" name="">
-    {% endif %}
-        {% csrf_token %}
-        <center>
-            <div><button type="submit" name="submit" value="back" class="btn btn-circle btn-lg grey px-2 "><i class="fa fa-undo "></i></button>
-                <button type="submit" name="submit" value="rejected" class="btn btn-circle btn-lg red "><i class="fa fa-times "></i></button> {% if request.user.is_recruiter %}
-                <button type="submit" name="submit" class="btn btn-circle btn-lg yellow "><span class="tilde ">&#126;</span></button> {% endif %}
-                <button type="submit" name="submit" value="accepted" class="btn btn-circle btn-lg green "><i class="fa fa-check "></i></button></div>
-        </center>
-    </form>
+    <form method="POST" action="{% url 'browse' curr %}" name="">
+        {% else %}
+        <form method="POST" action="{% url 'r_browse' curr_pk curr_student %}" name="">
+            {% endif %} {% csrf_token %}
+            <center>
+                <div><button type="submit" name="submit" value="back" class="btn btn-circle btn-lg grey px-2 "><i class="fa fa-undo "></i></button>
+                    <button type="submit" name="submit" value="rejected" class="btn btn-circle btn-lg red "><i class="fa fa-times "></i></button> {% if request.user.is_recruiter %}
+                    <button type="submit" name="submit" class="btn btn-circle btn-lg yellow "><span class="tilde ">&#126;</span></button> {% endif %}
+                    <button type="submit" name="submit" value="accepted" class="btn btn-circle btn-lg green "><i class="fa fa-check "></i></button></div>
+            </center>
+        </form>
+
 
 </body> {% endblock content %}

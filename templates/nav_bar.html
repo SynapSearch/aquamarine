@@ -20,19 +20,21 @@
     <div class="div-blue">
         <nav class="navbar justify-content-between">
             <!-- Make conditional - should not always show up -->
-            <a class="text-white navbar-brand" href="#">Browse</a>
-            <!-- Do recruiters even need a search bar? -->
+            {% if request.user.is_recruiter %} {%else%}
+            <a class="text-white navbar-brand" href="{% url 'browse' 0 %}">Browse</a>
+
             <div class="d-flex">
-                <form class="form-inline pt-3" action="#" method="get">
+                <form class="form-inline pt-3" action="{% url 'search_results' %}" method="GET">
                     <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-1 ">
                         <i class="fa fa-search "></i>
                         <input name="q" size="50" type=" text " placeholder="Search... " class="form-control border-0 bg-light mr-sm-3">
                     </div>
                 </form>
             </div>
+            {% endif %}
 
             <div>
-                <span class="hello-msg navbar-brand ">Hello, {{request.user}}</span>
+                <span class=" hello-msg navbar-brand pt-4 pb-4 ">Hello, {{request.user}}</span>
                 <span><a  class="hello-msg navbar-brand " href="{% url 'logout' %} ">Logout</a></span>
             </div>
         </nav>

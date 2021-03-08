@@ -1,0 +1,13 @@
+{% extends 'swipebase.html' %} {% block content %}
+<center>{% if request.user.is_recruiter %}
+    <div class="pt-4">
+        <h3 class="pt-5"> No more Students to view. Check back later! </h3>
+    </div>
+    {% else %}
+    <div class="pt-4">
+        <h3 class="pt-5"> No more Jobs to view. Check back later!</h3>
+    </div>
+
+
+    {% endif %}
+</center> {% endblock content %}
