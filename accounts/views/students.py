@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from ..models import UserProfile, StudentProfile, Project, Experience, Skill, Interest, Involvement
-from ..forms import StudentProfileForm, ProjectForm, ExperienceForm, InvolvementForm
+from jobs.models import Job
+from ..forms import StudentProfileForm, ProjectForm, ExperienceForm, InvolvementForm, RecruiterProfile
 from django.db import models
+from django.db.models import Q 
 
 @login_required
 def create_profile(request):
@@ -184,3 +186,16 @@ def edit_skills(request):
 	}
 
 	return render(request, 'students/student_edit_skills.html', context)
+
+@login_required
+def search_results(request):
+	print("IN Function")
+	query = request.GET.get('q')
+	context={"jobs": None, "labs":None}
+	if(len(query)>1):
+		job_results = Job.objects.filter(Q(title__icontains=query)|Q(description__icontains=query))
+		lab_results = RecruiterProfile.objects.filter(Q(title__icontains=query)|Q(description__icontains=query))
+		context["jobs"] = job_results
+		context["labs"]=lab_results
+	print(job_results)
+	return render(request, "search_results.html", context)

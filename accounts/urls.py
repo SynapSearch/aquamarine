@@ -16,6 +16,7 @@ urlpatterns = [
 	path('students/profile/', students.view_profile, name='s_viewprofile'),
 	path('students/profile/create', students.create_profile, name='s_createprofile'),
 	path('students/profile/edit', students.edit_profile, name='s_editprofile'),
+	path('search/', students.search_results, name='search_results'),
 
 	path('students/profile/edit/create/expirence', students.create_experience, name='s_createexp'),
 	path('students/profile/edit/create/project', students.create_project, name='s_createproject'),

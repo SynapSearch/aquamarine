@@ -1,4 +1,4 @@
-{% extends 'base_jobs.html' %} {% block content %}
+{% extends 'nav_bar.html' %} {% block content %}
 
 <div class="div-padding">
 
@@ -14,7 +14,7 @@
     <br>
     <br>
     <form method="POST">
-        {% csrf_token %} 
+        {% csrf_token %}
         <div class="form-group">
             <label>Title</label>
             <br>
@@ -32,26 +32,25 @@
         </div>
         <div class="form-group">
             <label>Enter the job term:</label>
-            <br>
-            {{form.term}}
+            <br> {{form.term}}
         </div>
         <div class="form-group">
             <label>Job requirements:</label>
-            <br>
-            {% for r in requirements_list %}
-                {{ r.get_name_display}}
-                <input type="checkbox" value="{{ r.name }}" name="requirements">
-                <br>
-            {% endfor %}
+            <br> {% for r in requirements_list %} {{ r.get_name_display}}
+            <input type="checkbox" value="{{ r.name }}" name="requirements">
+            <br> {% endfor %}
         </div>
         <div class="form-group">
             <label>Job preferences:</label>
-            <br>
-            {% for p in preferences_list %}
-                {{ p.get_name_display}}
-                <input type="checkbox" value="{{ p.name }}" name="preferences">
-                <br>
-            {% endfor %}
+            <br> {% for p in preferences_list %} {{ p.get_name_display}}
+            <input type="checkbox" value="{{ p.name }}" name="preferences">
+            <br> {% endfor %}
+        </div>
+        <div class="form-group">
+            <label>Job Compensation Type:</label>
+            <br> {% for c in compensation_list %} {{ c.get_name_display}}
+            <input type="checkbox" value="{{ c.name }}" name="compensation_types">
+            <br> {% endfor %}
         </div>
         <div class="form-group">
             <label>Job Compensation Type:</label>
