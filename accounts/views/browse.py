@@ -1,5 +1,5 @@
 from jobs.models import Job
-from ..models import Experience, Project, RecruiterProfile, StudentProfile
+from ..models import Experience, Project, RecruiterProfile, StudentProfile, Involvement
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -66,8 +66,9 @@ def r_browse(request, pk, curr_student=0):
 
     exp = Experience.objects.filter(created_by=student.user)
     project = Project.objects.filter(created_by=student.user)
+    involvement = Involvement.objects.filter(created_by=student.user)
     context = {
-    'student': student, 'exp': exp, 'project': project,
+    'student': student, 'exp': exp, 'project': project, "involvement":involvement, 
     'curr_pk': pk, 'curr_student': curr_student}
     
     return render(request, 'browse.html', context)
