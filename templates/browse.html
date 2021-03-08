@@ -45,8 +45,20 @@
                         {% endfor %}
                     </div>
                     {% else %}
-                    <h1 class="pt-3 ">{{job.title}}</h1>
-                    <h3>{{job.location}}</h3>
+                    <h1 class="pt-3 ">{{recruiter.title}}</h1>
+                    <h3>{{recruiter.location}}</h3>
+                    <h4>{{recruiter.description}}</h4>
+                    <p class="pt-1 px-4 text-white text-left ">Required Skills</p>
+                    <div class="container text-left px-4 ">
+                        {% for r in job.requirements.all%}
+                        <li>{{r.get_name_display}} </li> {% endfor %}
+                    </div>
+                    <div class="text-left px-4 ">
+                        <p class="pt-1 text-white ">Prefered Skills</p>
+                        {% for p in job.preferences.all%}
+                        <li>{{p.get_name_display}}</li>
+                        {% endfor %}
+                    </div>
                     {% endif %}
 
                 </div>
@@ -78,10 +90,9 @@
                     </div>
                     {% endfor %} {% else %}
                     <div class="text-left ">
-                        <h5 class="pt-2 font-weight-bold ">{{job.title}}</h5>
+                        <h2 class="pt-2 font-weight-bold ">{{job.title}}</h2>
                         <h6>{{job.published}}</h6>
                         <p>{{job.location}}</p>
-
                         {{job.description}}
                     </div>
                     {% endif %}
