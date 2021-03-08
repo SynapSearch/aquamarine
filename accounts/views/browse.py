@@ -5,36 +5,27 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 @login_required
-def browse(request, curr=0):
-    if Job.objects.count() == 0:
-        return redirect('out_of_range')
+def browse(request):
+    student = StudentProfile.objects.get(user=request.user)
+    student.save()
+    job_array = Job.objects.exclude(student_has_swiped=student)
 
+    if job_array.count() == 0:
+        return redirect('out_of_range')
 
     if request.user.is_recruiter:
         return redirect('r_viewprofile')
-        
-    job_array = Job.objects.all()
 
-    if curr != 0:
-        last_job = job_array[curr-1]
-    else:
-        last_job = job_array[0]
+    job = job_array[0]
 
     if request.method == 'POST':
+        job.student_has_swiped.add(student)
         if request.POST['submit'] == 'accepted':
-            student = StudentProfile.objects.get(user=request.user)
-            student.save()
-            last_job.students_who_swiped_yes.add(student)
+            job.students_who_swiped_yes.add(student)
+        return redirect('browse')
 
-    if curr == Job.objects.count():
-        return redirect('out_of_range')
-    
-    
-    
-    job = job_array[curr]
     recruiter = RecruiterProfile.objects.get(user=job.created_by)
-    curr = curr + 1
-    context = {'job': job, "curr":curr, 'recruiter':recruiter}
+    context = {'job': job, 'recruiter':recruiter}
 
     return render(request, 'browse.html', context)
 
@@ -49,7 +40,6 @@ def r_browse(request, pk, curr_student=0):
 
     if student_array.count() == 0:
         return redirect('out_of_range')
-
 
     if curr_student != 0:
         last_student = student_array[curr_student-1]
@@ -82,7 +72,7 @@ def home(request):
             return redirect('r_viewprofile')
         elif request.user.is_superuser:
             return redirect(reverse('admin:index'))
-        return redirect('browse', 0)
+        return redirect('browse')
 
     return render(request, 'home.html')
 

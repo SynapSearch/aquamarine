@@ -42,6 +42,7 @@ class Job(models.Model):
     
     is_active = models.BooleanField(default = True)
 
+    student_has_swiped = models.ManyToManyField(StudentProfile, related_name='student_has_swiped')
     students_who_swiped_yes = models.ManyToManyField(StudentProfile,related_name='students_who_swiped_yes')
     students_accepted_by_recruiter = models.ManyToManyField(StudentProfile,related_name='students_accepted_by_recruiter')
 

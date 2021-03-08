@@ -21,7 +21,7 @@
         <nav class="navbar justify-content-between">
             <!-- Make conditional - should not always show up -->
             {% if request.user.is_recruiter %} {%else%}
-            <a class="text-white navbar-brand" href="{% url 'browse' 0 %}">Browse</a>
+            <a class="text-white navbar-brand" href="{% url 'browse' %}">Browse</a>
 
             <div class="d-flex">
                 <form class="form-inline pt-3" action="{% url 'search_results' %}" method="GET">
