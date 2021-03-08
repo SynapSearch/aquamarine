@@ -25,6 +25,10 @@
                 <div class="user-card text-white-50 ">
                     <center>
                         <div class="circle ">
+                            {% if request.user.is_recruiter%}
+                            <img class="profile-pic " src="{{ student.picture.url }}"> {% else %}
+                            <img class="profile-pic " src="{{ recruiter.picture.url }}"> {% endif %}
+                        </div>
                     </center>
                     {% if request.user.is_recruiter %}
                     <h1 class="pt-3 ">{{student.first_name}} {{student.last_name}}</h1>
@@ -45,57 +49,48 @@
                     <h3>{{job.location}}</h3>
                     {% endif %}
 
-                    </div>
-                    <div class="general ">
-                        {% if request.user.is_recruiter %}
-                        <h2>Experience</h2>
-                        {% for e in exp %}
-                        <div class="text-left ">
-                            <h5 class="pt-2 font-weight-bold ">{{e.title}}</h5>
-                            <h6>{{e.company}}</h6>
-                            <p>{{e.dates}}</p>
-                            <div class="small ">
-                                {{e.description}}
-                            </div>
-                            {% endfor %}
-
-
-                            <h2 class="text-center pt-3 ">Projects</h2>
-                            {% for p in project %}
-
-                            <h5 class="pt-2 font-weight-bold ">{{p.title}}
-                            </h5>
-                            <h6>{{p.company}}
-                            </h6>
-                            <p>{{p.dates}}</p>
-                            <div class="small ">
-                                {{p.description}}
-                            </div>
+                </div>
+                <div class="general ">
+                    {% if request.user.is_recruiter %}
+                    <h2>Experience</h2>
+                    {% for e in exp %}
+                    <div class="text-left ">
+                        <h5 class="pt-2 font-weight-bold ">{{e.title}}</h5>
+                        <h6>{{e.company}}</h6>
+                        <p>{{e.dates}}</p>
+                        <div class="small ">
+                            {{e.description}}
                         </div>
-                        {% endfor %} {% else %}
-                        <div class="text-left ">
-                            <h5 class="pt-2 font-weight-bold ">{{job.title}}</h5>
-                            <h6>{{job.published}}</h6>
-                            <p>{{job.location}}</p>
+                        {% endfor %}
 
-                            {{job.description}}
-                            <!-- <h5 class="pt-2 font-weight-bold ">UROP</h5>
-                        <h6>Koch Institute of Integrative Cancer Research, Spranger Lab
+
+                        <h2 class="text-center pt-3 ">Projects</h2>
+                        {% for p in project %}
+
+                        <h5 class="pt-2 font-weight-bold ">{{p.title}}
+                        </h5>
+                        <h6>{{p.company}}
                         </h6>
-                        <p>Summer 2020 - Fall 2020</p>
-                        <div class="small ">Research in the Spranger lab focused on solid tumor immunology and computational biological analysis. Aid in day to day lab activities such as cell culture, mouse handling, immunological assays, staining and flowing of cells via
-                            flow cytometry. Perform RNA-Seq analysis on single cell data observing expression differences between different tissue types and their responses to immune blocking therapy.
-                        </div> -->
-
+                        <p>{{p.dates}}</p>
+                        <div class="small ">
+                            {{p.description}}
                         </div>
-                        {% endif %}
-
-
                     </div>
+                    {% endfor %} {% else %}
+                    <div class="text-left ">
+                        <h5 class="pt-2 font-weight-bold ">{{job.title}}</h5>
+                        <h6>{{job.published}}</h6>
+                        <p>{{job.location}}</p>
+
+                        {{job.description}}
+                    </div>
+                    {% endif %}
+
+
                 </div>
             </div>
-            <!-- <div><span class="more-info ">Mouse over the card for more info</span> -->
         </div>
+    </div>
     </div>
 
     {% if not request.user.is_recruiter %}

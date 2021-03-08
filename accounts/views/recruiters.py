@@ -11,7 +11,7 @@ def create_profile(request):
 		return redirect('r_viewprofile')
 		
 	if request.method == 'POST':
-		form = RecruiterProfileForm(request.POST)
+		form = RecruiterProfileForm(request.POST,  request.FILES)
 		if form.is_valid():
 			profile = form.save(commit=False)
 			profile.user = request.user
@@ -33,7 +33,7 @@ def view_profile(request):
 def edit_profile(request):
 	profile = get_object_or_404(RecruiterProfile, user=request.user)
 	if request.method == 'POST':
-		form = RecruiterProfileForm(request.POST, instance=profile)
+		form = RecruiterProfileForm(request.POST,  request.FILES, instance=profile)
 		if form.is_valid():
 			profile = form.save()
 			profile.save()

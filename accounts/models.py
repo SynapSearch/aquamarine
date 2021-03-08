@@ -12,7 +12,7 @@ class RecruiterProfile(models.Model):
 	title = models.CharField(max_length=150)
 	description = models.TextField()
 	location = models.CharField(max_length=150)
-	picture = models.ImageField(upload_to="media/gallery", default="gallery/profile_pic_default.png", blank=True)
+	picture = models.ImageField(upload_to="gallery", default="gallery/profile_pic_default.png", blank=True)
 
 	def __str__(self):
 		return self.user.username
@@ -47,7 +47,7 @@ class StudentProfile(models.Model):
 	graduation_year = models.IntegerField()
 	major = models.CharField(max_length=100)
 
-	picture = models.ImageField(upload_to="media", default="gallery/profile_pic_default.png", blank=True, null=True)
+	picture = models.ImageField(upload_to="gallery", default="gallery/profile_pic_default.png", blank=True, null=True)
 	skills = models.ManyToManyField(Skill)
 	interests = models.ManyToManyField(Interest)
 

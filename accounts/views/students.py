@@ -63,7 +63,7 @@ def view_profile(request):
 def edit_profile(request):
 	profile = get_object_or_404(StudentProfile, user=request.user)
 	if request.method == 'POST':
-		form = StudentProfileForm(request.POST, instance=profile)
+		form = StudentProfileForm(request.POST, request.FILES, instance=profile)
 		if form.is_valid():
 			profile = form.save()
 			profile.save()
