@@ -108,7 +108,7 @@
     {% if not request.user.is_recruiter %}
     <form method="POST" action="{% url 'browse' %}" name="">
         {% else %}
-        <form method="POST" action="{% url 'r_browse' curr_pk curr_student %}" name="">
+        <form method="POST" action="{% url 'r_browse' curr_pk %}" name="">
             {% endif %} {% csrf_token %}
             <center>
                 <div><button type="submit" name="submit" value="back" class="btn btn-circle btn-lg grey px-2 "><i class="fa fa-undo "></i></button>

@@ -6,15 +6,15 @@ from django.urls import reverse
 
 @login_required
 def browse(request):
+    if request.user.is_recruiter:
+        return redirect('r_viewprofile')
+
     student = StudentProfile.objects.get(user=request.user)
     student.save()
     job_array = Job.objects.exclude(student_has_swiped=student)
 
     if job_array.count() == 0:
         return redirect('out_of_range')
-
-    if request.user.is_recruiter:
-        return redirect('r_viewprofile')
 
     job = job_array[0]
 
@@ -30,39 +30,32 @@ def browse(request):
     return render(request, 'browse.html', context)
 
 @login_required
-def r_browse(request, pk, curr_student=0):
-
+def r_browse(request, pk):
     if not request.user.is_recruiter:
         return redirect('s_viewprofile')
 
     job = Job.objects.get(pk=pk)
-    student_array = job.students_who_swiped_yes.all()
+    job.save()
+
+    student_array = job.students_who_swiped_yes.exclude(recruiter_has_swiped_for_job=job)
 
     if student_array.count() == 0:
         return redirect('out_of_range')
 
-    if curr_student != 0:
-        last_student = student_array[curr_student-1]
-    else:
-        last_student = student_array[0]
+    student = student_array[0]
 
     if request.method == 'POST':
+        job.recruiter_has_swiped.add(student)
         if request.POST['submit'] == 'accepted':
-            job.students_accepted_by_recruiter.add(last_student)
-
-
-    if curr_student == student_array.count():
-        return redirect('out_of_range')
-
-    student = student_array[curr_student]
-    curr_student = curr_student + 1
+            job.students_accepted_by_recruiter.add(student)
+        return redirect('r_browse', pk)
 
     exp = Experience.objects.filter(created_by=student.user)
     project = Project.objects.filter(created_by=student.user)
     involvement = Involvement.objects.filter(created_by=student.user)
     context = {
     'student': student, 'exp': exp, 'project': project, "involvement":involvement, 
-    'curr_pk': pk, 'curr_student': curr_student}
+    'curr_pk': pk,}
     
     return render(request, 'browse.html', context)
 

@@ -6,7 +6,7 @@ urlpatterns = [
 	path('signup/', authentication.signup, name="signup"),
 	path('login/', authentication.login_view, name="login"),
 
-	path('recruiters/browse/<int:pk>/<int:curr_student>/', browse.r_browse, name='r_browse'),
+	path('recruiters/browse/<int:pk>/', browse.r_browse, name='r_browse'),
 	path('browse/', browse.browse, name='browse'),
 	path('end/', browse.out_of_range, name='out_of_range'),
 	
