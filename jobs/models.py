@@ -21,7 +21,8 @@ class Job(models.Model):
     #Blank=False --- required field
     #null=False -- databasa
     created_by = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    title = models.CharField(max_length=100) # set a max
+
+    title = models.CharField(max_length=200,blank=False) # set a max
     description = models.TextField(blank=False) # set a max words 
     published = models.DateField(auto_now_add = True)
     is_remote = models.BooleanField(default = False)

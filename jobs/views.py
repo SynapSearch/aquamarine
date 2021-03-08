@@ -6,18 +6,20 @@ from accounts.models import Skill
 
 from .forms import CreateJobForm
 
-def create_jobs(request):
-    if not Compensation.objects.exists():
-        Compensation.objects.bulk_create(
-            [Compensation(name='0'),
-            Compensation(name='1'),
-            Compensation(name='2'),
-            Compensation(name='3'),
-            Compensation(name='4'),
-            ])
+from itertools import zip_longest
 
+def create_jobs(request):
     if not request.user.is_recruiter:
         return redirect('browse')
+
+    if not Compensation.objects.exists():
+        Compensation.objects.bulk_create(
+        [Compensation(name='0'),
+        Compensation(name='1'),
+        Compensation(name='2'),
+        Compensation(name='3'),
+        Compensation(name='4'),
+        ])
 
     if request.method == 'POST':
         form = CreateJobForm(request.POST)
@@ -56,10 +58,12 @@ def create_jobs(request):
         'preferences_list': preferences_list,
         'compensation_list': compensation_list,
     }
-    return render(request, "create_job.html", context)
-
+    return render(request, "jobs/create_job.html", context)
 
 def edit_jobs(request, pk):
+    if not request.user.is_authenticated:
+        return redirect('home')
+
     if not request.user.is_recruiter:
         return redirect('browse')
 
@@ -67,13 +71,29 @@ def edit_jobs(request, pk):
     if request.method == 'POST':
         form = CreateJobForm(request.POST, instance=job)
         if form.is_valid():
-            newjob = form.save()
-            newjob.save()
+            job = form.save()
+            job.compensation_types.clear()
+            compensation_types = request.POST.getlist('compensation_types')
+            for c in compensation_types:
+                c = Compensation.objects.get_or_create(name=c)[0]
+                c.save()
+                job.compensation_types.add(c)
+            job.save()
             return redirect('r_viewprofile')
     else:
         form = CreateJobForm(instance=job)
 
+    requirements_list = Skill.objects.all()
+    preferences_list = Skill.objects.all()
+    compensations_saved = list(job.compensation_types.all())
+    compensation_list = Compensation.objects.all()
+
     context = {
         'form':form,
+        'job': job,
+        'requirements_list': requirements_list,
+        'preferences_list': preferences_list,
+        'compensations_saved': compensations_saved,
+        'compensation_list': compensation_list
     }
-    return render(request, "edit_job.html", context)
+    return render(request, "jobs/edit_job.html", context)
