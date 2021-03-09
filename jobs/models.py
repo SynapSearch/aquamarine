@@ -46,6 +46,9 @@ class Job(models.Model):
     students_who_swiped_yes = models.ManyToManyField(StudentProfile,related_name='students_who_swiped_yes')
 
     students_accepted_by_recruiter = models.ManyToManyField(StudentProfile,related_name='students_accepted_by_recruiter')
+    students_in_maybe_pile = models.ManyToManyField(StudentProfile,related_name='students_in_maybe_pile_for_job')
+    temp_maybe_list = models.ManyToManyField(StudentProfile,related_name='temp_maybe_list_for_job')
+
     recruiter_has_swiped = models.ManyToManyField(StudentProfile, related_name='recruiter_has_swiped_for_job')
 
     compensation_types = models.ManyToManyField(Compensation)

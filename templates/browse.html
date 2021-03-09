@@ -107,13 +107,17 @@
 
     {% if not request.user.is_recruiter %}
     <form method="POST" action="{% url 'browse' %}" name="">
+    {% else %}
+        {% if maybe_browse_is_true %}
+        <form method="POST" action="{% url 'maybe_browse' curr_pk %}" name="">
         {% else %}
         <form method="POST" action="{% url 'r_browse' curr_pk %}" name="">
+        {% endif %}
             {% endif %} {% csrf_token %}
             <center>
                 <div><button type="submit" name="submit" value="back" class="btn btn-circle btn-lg grey px-2 "><i class="fa fa-undo "></i></button>
                     <button type="submit" name="submit" value="rejected" class="btn btn-circle btn-lg red "><i class="fa fa-times "></i></button> {% if request.user.is_recruiter %}
-                    <button type="submit" name="submit" class="btn btn-circle btn-lg yellow "><span class="tilde ">&#126;</span></button> {% endif %}
+                    <button type="submit" name="submit" value="maybe" class="btn btn-circle btn-lg yellow "><span class="tilde ">&#126;</span></button> {% endif %}
                     <button type="submit" name="submit" value="accepted" class="btn btn-circle btn-lg green "><i class="fa fa-check "></i></button></div>
             </center>
         </form>
