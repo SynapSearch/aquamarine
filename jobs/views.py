@@ -6,8 +6,6 @@ from accounts.models import Skill
 
 from .forms import CreateJobForm
 
-from itertools import zip_longest
-
 def create_jobs(request):
     if not request.user.is_recruiter:
         return redirect('browse')

@@ -10,7 +10,7 @@ def signup(request, *args, **kargs):
     if request.user.is_authenticated:
         if request.user.is_recruiter:
             return redirect('r_viewprofile')
-        return redirect('browse', 0)
+        return redirect('browse')
 
     if request.method == 'POST':
         form = UserSignupForm(request.POST)
@@ -29,7 +29,7 @@ def login_view(request, *args, **kargs):
     if request.user.is_authenticated:
         if request.user.is_recruiter:
             return redirect('r_viewprofile')
-        return redirect('browse', 0)
+        return redirect('browse')
 
     if request.method == 'POST':
         form = UserLoginForm(data=request.POST)
@@ -39,7 +39,7 @@ def login_view(request, *args, **kargs):
             if request.user.is_recruiter:
                 return redirect('r_viewprofile')
 
-            return redirect('browse', 0)
+            return redirect('browse')
         else: 
             return render(
                 request, 

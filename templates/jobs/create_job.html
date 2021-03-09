@@ -52,16 +52,7 @@
             <input type="checkbox" value="{{ c.name }}" name="compensation_types">
             <br> {% endfor %}
         </div>
-        <div class="form-group">
-            <label>Job Compensation Type:</label>
-            <br>
-            {% for c in compensation_list %}
-                {{ c.get_name_display}}
-                <input type="checkbox" value="{{ c.name }}" name="compensation_types">
-                <br>
-            {% endfor %}
-        </div>
-
+        
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 
