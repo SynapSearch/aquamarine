@@ -63,15 +63,23 @@ def view_profile(request):
 def edit_profile(request):
 	profile = get_object_or_404(StudentProfile, user=request.user)
 	if request.method == 'POST':
+		
 		form = StudentProfileForm(request.POST, request.FILES, instance=profile)
+		
+		print("SKILLS", request.POST.getlist('skills'))
+		print("Interests", request.POST.getlist('interests'))
 		if form.is_valid():
+			
 			profile = form.save()
 			profile.save()
 			return redirect('s_viewprofile')
 	else:
 		form = StudentProfileForm(instance=profile)
+	interest_list = Interest.objects.all()
+	skill_list = Skill.objects.all()
+	print(skill_list)
 
-	return render(request, 'students/student_edit_profile.html', {'form':form})
+	return render(request, 'students/student_edit_profile.html', {'form':form, "profile":profile, 'skill_list':skill_list})
 
 @login_required
 def create_experience(request):

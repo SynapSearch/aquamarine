@@ -1,6 +1,16 @@
 {% extends 'nav_bar.html' %} {% block content %}
 <div class="div-padding">
 
+    <script>
+        $(function() {
+            var possibleSkills = [{% for s in skill_list %} "{{s.get_name_display}}", {% endfor %}];
+            console.log(possibleSkills);
+            $( "#skillTags" ).autocomplete({
+                source: possibleSkills
+            });
+        });
+    </script>
+
     <head>
 
         <h1>Edit Profile
@@ -12,7 +22,7 @@
 
     <br>
     <br>
-    <form method="POST" action="" enctype="multipart/form-data">
+    <form method="POST" action="" enctype="multipart/form-data" >
         {% csrf_token %}
         <div class="form-group">
             <label>First Name</label>
@@ -38,12 +48,23 @@
             <label>Profile Picture</label>
             <br> {{form.picture}}
         </div>
-        <button type="submit" class="btn btn-primary" value="Upload">Submit</button>
+        <div class="form-group">
+            <label> Skills </label>
+            <input type="text" data-role="tagsinput" class="form-control" name="skills" id="skillTags" value="C++">
+
+
+        </div>
+        <div class="form-group ">
+            <label> Interests </label>
+            <select multiple data-role="tagsinput " name="interests ">
+            </select>
+        </div>
+        <button type="submit " class="btn btn-primary " value="Upload ">Submit</button>
     </form>
 
-</div>
+    <div>
 
-</body>
-</div>
+        </body>
+    </div>
 
-{% endblock content %}
+    {% endblock content %}
