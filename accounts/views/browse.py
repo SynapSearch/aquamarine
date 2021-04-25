@@ -10,7 +10,6 @@ def browse(request):
         return redirect('r_viewprofile')
 
     student = StudentProfile.objects.get(user=request.user)
-    student.save()
     job_array = Job.objects.exclude(student_has_swiped=student)
 
     if job_array.count() == 0:
@@ -35,7 +34,6 @@ def r_browse(request, pk):
         return redirect('s_viewprofile')
 
     job = Job.objects.get(pk=pk)
-    job.save()
 
     student_array = job.students_who_swiped_yes.exclude(recruiter_has_swiped_for_job=job)
 
@@ -48,15 +46,55 @@ def r_browse(request, pk):
         job.recruiter_has_swiped.add(student)
         if request.POST['submit'] == 'accepted':
             job.students_accepted_by_recruiter.add(student)
+        if request.POST['submit'] == 'maybe':
+            job.students_in_maybe_pile.add(student)
         return redirect('r_browse', pk)
 
     exp = Experience.objects.filter(created_by=student.user)
     project = Project.objects.filter(created_by=student.user)
     involvement = Involvement.objects.filter(created_by=student.user)
+    maybe_browse_is_true = False;
+
     context = {
     'student': student, 'exp': exp, 'project': project, "involvement":involvement, 
-    'curr_pk': pk,}
+    'curr_pk': pk, 'maybe_browse_is_true': maybe_browse_is_true}
     
+    return render(request, 'browse.html', context)
+
+@login_required
+def maybe_browse(request, pk):
+    if not request.user.is_recruiter:
+        return redirect('s_viewprofile')
+
+    job = Job.objects.get(pk=pk)
+
+    student_array = job.students_in_maybe_pile.all().exclude(temp_maybe_list_for_job=job)
+
+    if student_array.count() == 0:
+        return redirect('out_of_range')
+
+    student = student_array[0]
+
+    if request.method == 'POST':
+        if request.POST['submit'] == 'accepted':
+            job.students_accepted_by_recruiter.add(student)
+            job.students_in_maybe_pile.remove(student)
+        if request.POST['submit'] == 'maybe':
+            job.temp_maybe_list.add(student)
+        if request.POST['submit'] == 'rejected':
+            job.students_in_maybe_pile.remove(student)
+
+        return redirect('maybe_browse', pk)
+
+    exp = Experience.objects.filter(created_by=student.user)
+    project = Project.objects.filter(created_by=student.user)
+    involvement = Involvement.objects.filter(created_by=student.user)
+    maybe_browse_is_true = True;
+
+    context = {
+    'student': student, 'exp': exp, 'project': project, "involvement":involvement, 
+    'curr_pk': pk, 'maybe_browse_is_true': maybe_browse_is_true}
+
     return render(request, 'browse.html', context)
 
 def home(request):

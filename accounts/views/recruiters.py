@@ -25,6 +25,8 @@ def create_profile(request):
 @login_required
 def view_profile(request):
 	profile = get_object_or_404(RecruiterProfile, user=request.user)
+	for i in Job.objects.all():
+		i.temp_maybe_list.clear()
 	jobs = Job.objects.filter(created_by=request.user)
 	return render(request, 'recruiters/recruiter_view_profile.html', {'profile':profile, 'jobs':jobs})
 
