@@ -1,4 +1,4 @@
-"""syns URL Configuration
+"""settings URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.1/topics/http/urls/
@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views
+import tagulous.views
 
 from accounts.views.authentication import *
 from accounts.views.browse import home

@@ -1,15 +1,5 @@
-{% extends 'nav_bar.html' %} {% block content %}
+{% extends 'nav_bar.html' %} {% block css %} {{ form_media.css }} {% endblock %} {% block js %} {{ form_media.js }} {% endblock %} {% block content %}
 <div class="div-padding">
-
-    <script>
-        $(function() {
-            var possibleSkills = [{% for s in skill_list %} "{{s.get_name_display}}", {% endfor %}];
-            console.log(possibleSkills);
-            $( "#skillTags" ).autocomplete({
-                source: possibleSkills
-            });
-        });
-    </script>
 
     <head>
 
@@ -22,7 +12,7 @@
 
     <br>
     <br>
-    <form method="POST" action="" enctype="multipart/form-data" >
+    <form method="POST" action="" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group">
             <label>First Name</label>
@@ -48,17 +38,12 @@
             <label>Profile Picture</label>
             <br> {{form.picture}}
         </div>
-        <div class="form-group">
-            <label> Skills </label>
-            <input type="text" data-role="tagsinput" class="form-control" name="skills" id="skillTags" value="C++">
 
-
-        </div>
         <div class="form-group ">
-            <label> Interests </label>
-            <select multiple data-role="tagsinput " name="interests ">
-            </select>
+            <label> Interests </label> {{form.interests}}
         </div>
+
+        <label> Skills </label> {{form.skills}}
         <button type="submit " class="btn btn-primary " value="Upload ">Submit</button>
     </form>
 

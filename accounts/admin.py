@@ -1,5 +1,5 @@
 from django.contrib import admin
-
+import tagulous.admin
 # Register your models here.
 
 from .models import (UserProfile, RecruiterProfile,
@@ -11,6 +11,6 @@ admin.site.register(RecruiterProfile)
 admin.site.register(StudentProfile)
 admin.site.register(Experience)
 admin.site.register(Project)
-admin.site.register(Skill)
+tagulous.admin.register(Skill)
 admin.site.register(Interest)
 admin.site.register(Involvement)

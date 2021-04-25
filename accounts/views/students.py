@@ -1,18 +1,21 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from ..models import UserProfile, StudentProfile, Project, Experience, Skill, Interest, Involvement
+from ..models import UserProfile, StudentProfile, Project, Experience, Interest, Involvement, Skill
 from jobs.models import Job
 from ..forms import StudentProfileForm, ProjectForm, ExperienceForm, InvolvementForm, RecruiterProfile
 from django.db import models
 from django.db.models import Q 
+from django.urls import reverse
+
+
 
 @login_required
 def create_profile(request):
 	if StudentProfile.objects.filter(user=request.user).exists():
 		return redirect('s_viewprofile')
 
-	if not Skill.objects.exists():
-		Skill.objects.bulk_create([Skill(name='0'),Skill(name='1'),])
+	skills = Skill.objects.all()
+	interests = Interest.objects.all()
 	if not Interest.objects.exists():
 		Interest.objects.bulk_create([Interest(name='0'),Interest(name='1'),])
 
@@ -22,12 +25,12 @@ def create_profile(request):
 			profile = form.save(commit=False)
 			profile.user = request.user
 			profile = form.save()
-			skills = request.POST.getlist('skills')
+			# skills = request.POST.getlist('skills')
 			interests = request.POST.getlist('interests')
-			for s in skills:
-				s = Skill.objects.get_or_create(name=s)[0]
-				s.save()
-				profile.skills.add(s)
+			# for s in skills:
+			# 	s = Skill.objects.get_or_create(name=s)[0]
+			# 	s.save()
+			# 	profile.skills.add(s)
 			for i in interests:
 				i = Interest.objects.get_or_create(name=i)[0]
 				i.save()
@@ -38,13 +41,12 @@ def create_profile(request):
 			form = StudentProfileForm()
 	else:
 		form = StudentProfileForm()
-
-	interest_list = Interest.objects.all()
-	skill_list = Skill.objects.all()
 	context = {
 		'form':form, 
-		'skill_list':skill_list, 
-		'interest_list': interest_list
+		'skills':skills, 
+		'interests': interests, 
+		'form_media': form.media,
+		"Interest_name": Interest.__name__,
 	}
 
 	return render(request, 'students/student_create_profile.html', context)
@@ -55,19 +57,23 @@ def view_profile(request):
 	exp = Experience.objects.filter(created_by=request.user)
 	project = Project.objects.filter(created_by=request.user)
 	involvement = Involvement.objects.filter(created_by=request.user)
-	skills = profile.skills
+	skills = Skill.objects.all()
+	interests = Interest.objects.all()
 	print(skills)
-	return render(request, 'students/student_view_profile.html', {'profile':profile, 'exp':exp, 'project':project, "involvement": involvement, "skill": skills})
+	return render(request, 'students/student_view_profile.html', {'profile':profile, 'exp':exp, 'project':project, "involvement": involvement, "skills": skills, "interests": interests})
 
 @login_required
 def edit_profile(request):
 	profile = get_object_or_404(StudentProfile, user=request.user)
+	skills = Skill.objects.all()
+	interests = Interest.objects.all()
+
 	if request.method == 'POST':
 		
 		form = StudentProfileForm(request.POST, request.FILES, instance=profile)
 		
-		print("SKILLS", request.POST.getlist('skills'))
-		print("Interests", request.POST.getlist('interests'))
+		# print("SKILLS", request.POST.getlist('skills'))
+		# print("Interests", request.POST.getlist('interests'))
 		if form.is_valid():
 			
 			profile = form.save()
@@ -75,11 +81,7 @@ def edit_profile(request):
 			return redirect('s_viewprofile')
 	else:
 		form = StudentProfileForm(instance=profile)
-	interest_list = Interest.objects.all()
-	skill_list = Skill.objects.all()
-	print(skill_list)
-
-	return render(request, 'students/student_edit_profile.html', {'form':form, "profile":profile, 'skill_list':skill_list})
+	return render(request, 'students/student_edit_profile.html', {'form':form, "profile":profile, 'skills':skills, 'form_media': form.media,"Skill_name": Skill.__name__, "interests": interests, "Interest_name": Interest.__name__})
 
 @login_required
 def create_experience(request):
@@ -168,36 +170,8 @@ def edit_involvement(request, pk):
 
 	return render(request, 'students/student_edit_involvement.html', {'form':form})
 
-
-@login_required
-def edit_skills(request):
-	if request.method == 'POST':
-		profile = get_object_or_404(StudentProfile, user=request.user)
-
-		skills = request.POST.getlist('skills')
-		interests = request.POST.getlist('interests')
-		for s in skills:
-			s = Skill.objects.get_or_create(name=s)[0]
-			s.save()
-			profile.skills.add(s)
-		for i in interests:
-			i = Interest.objects.get_or_create(name=i)[0]
-			i.save()
-			profile.interests.add(i)
-		profile.save()
-		return redirect('s_viewprofile')
-	interest_list = Interest.objects.all()
-	skill_list = Skill.objects.all()
-	context = { 
-		'skill_list':skill_list, 
-		'interest_list': interest_list
-	}
-
-	return render(request, 'students/student_edit_skills.html', context)
-
 @login_required
 def search_results(request):
-	print("IN Function")
 	query = request.GET.get('q')
 	context={"jobs": None, "labs":None}
 	if(len(query)>1):

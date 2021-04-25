@@ -39,7 +39,7 @@ class RecruiterProfileForm(forms.ModelForm):
 class StudentProfileForm(forms.ModelForm):
 	class Meta:
 		model = StudentProfile
-		fields = ['first_name', 'last_name', 'school', 'graduation_year', 'major', 'picture']
+		fields = ['first_name', 'last_name', 'school', 'graduation_year', 'major', 'picture', "skills", "interests"]
 class ExperienceForm(forms.ModelForm):
 	class Meta: 
 		model = Experience
