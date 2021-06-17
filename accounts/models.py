@@ -27,6 +27,7 @@ class Interest(models.Model):
 	def __str__(self):
 		return self.name
 
+# Needs to be defined by recruiters
 class Skill(models.Model):
 	SKILLS = (
 		('0','C++'),
