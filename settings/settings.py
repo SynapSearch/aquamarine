@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'tagulous',
+  
     #our apps
     'accounts',
     'jobs'
@@ -137,3 +139,12 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(MAIN_DIR, 'static'),
 )
+
+# Tagulous configuration
+
+SERIALIZATION_MODULES = {
+    "xml": "tagulous.serializers.xml_serializer",
+    "json": "tagulous.serializers.json",
+    "python": "tagulous.serializers.python",
+    "yaml": "tagulous.serializers.pyyaml",
+}

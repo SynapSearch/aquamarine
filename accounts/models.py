@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+import tagulous.models
+from django.urls import reverse
 
 class UserProfile(AbstractUser):
 	is_recruiter = models.BooleanField(default=False)
@@ -17,26 +19,32 @@ class RecruiterProfile(models.Model):
 	def __str__(self):
 		return self.user.username
 
-class Interest(models.Model):
-	INTERESTS = (
-		('0','Machine Learning'),
-		('1','Biology'),
-		)
-	name = models.CharField(max_length=50, choices=INTERESTS)
+class Interest(tagulous.models.TagTreeModel):
+    class TagMeta:
+        initial = [
+            "Python/Django",
+            "Python/Flask",
+            "JavaScript/JQuery",
+            "JavaScript/Angular.js",
+            "Linux/nginx",
+            "Linux/uwsgi",
+        ]
+        space_delimiter = False
+        autocomplete_view = "StudentProfile_interests_autocomplete"
 
-	def __str__(self):
-		return self.name
 
-# Needs to be defined by recruiters
-class Skill(models.Model):
-	SKILLS = (
-		('0','C++'),
-		('1', 'Java'),
-		)
-	name = models.CharField(max_length=50, choices=SKILLS)
-
-	def __str__(self):
-		return self.name
+class Skill(tagulous.models.TagTreeModel):
+    class TagMeta:
+        initial = [
+            "Python/Django",
+            "Python/Flask",
+            "JavaScript/JQuery",
+            "JavaScript/Angular.js",
+            "Linux/nginx",
+            "Linux/uwsgi",
+        ]
+        space_delimiter = False
+        autocomplete_view = "StudentProfile_skills_autocomplete"
 
 class StudentProfile(models.Model):
 	user = models.OneToOneField(UserProfile, on_delete=models.CASCADE, primary_key=True)
@@ -49,8 +57,12 @@ class StudentProfile(models.Model):
 	major = models.CharField(max_length=100)
 
 	picture = models.ImageField(upload_to="gallery", default="gallery/profile_pic_default.png", blank=True, null=True)
-	skills = models.ManyToManyField(Skill)
-	interests = models.ManyToManyField(Interest)
+	skills = tagulous.models.TagField(
+        Skill, help_text="This field does not split on spaces", blank=True
+    )
+	interests = tagulous.models.TagField(
+        Interest, help_text="This field does not split on spaces", blank=True
+    )
 
 	def __str__(self):
 		return self.user.username

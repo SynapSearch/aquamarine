@@ -1,4 +1,4 @@
-{% extends 'nav_bar.html' %} {% block content %}
+{% extends 'nav_bar.html' %} {% block css %} {{ form_media.css }} {% endblock %} {% block js %} {{ form_media.js }} {% endblock %} {% block content %}
 <div class="div-padding">
 
     <head>
@@ -38,12 +38,18 @@
             <label>Profile Picture</label>
             <br> {{form.picture}}
         </div>
-        <button type="submit" class="btn btn-primary" value="Upload">Submit</button>
+
+        <div class="form-group ">
+            <label> Interests </label> {{form.interests}}
+        </div>
+
+        <label> Skills </label> {{form.skills}}
+        <button type="submit " class="btn btn-primary " value="Upload ">Submit</button>
     </form>
 
-</div>
+    <div>
 
-</body>
-</div>
+        </body>
+    </div>
 
-{% endblock content %}
+    {% endblock content %}

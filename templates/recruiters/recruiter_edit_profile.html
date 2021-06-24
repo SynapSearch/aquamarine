@@ -14,21 +14,22 @@
         {% csrf_token %}
         <div class="form-group">
             <label>Title</label>
-            <br> {{form.title}}
+            <br>
+            <input type="text" name="title" value="{{profile.title}}">
         </div>
         <div class="form-group">
-            <label>Description</label>
-            <br> {{form.description}}
+            <label>Description</label><br>
+            <input type="text" name="description" value="{{profile.description}}">
         </div>
 
         <div class=" form-group ">
-            <label>Location</label>
-            <br> {{form.location}}
+            <label>Location</label><br>
+            <input type="text" name="location" value="{{profile.location}}">
         </div>
 
         <div class="form-group">
-            <label>Profile Picture</label>
-            <br> {{form.picture}}
+            <label>Profile Picture</label><br>
+            <input type="file" name="picture">
         </div>
         <button type="submit" class="btn btn-primary" value="Upload">Submit</button>
     </form>
