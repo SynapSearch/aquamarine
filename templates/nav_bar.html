@@ -23,6 +23,10 @@
     <div class="div-blue">
         <nav class="navbar justify-content-between">
             <!-- Make conditional - should not always show up -->
+            <!-- These are placeholder objects, to trick the navbar to display the logout on the right side.
+                 Load objects in navbar BEFORE the logout button if you want it on the right side-->
+            <p></p>
+            <p></p>
             {% if request.user.is_recruiter %} {%else%}
             <a class="text-white navbar-brand" href="{% url 'browse' %}">Browse</a>
 
@@ -36,7 +40,7 @@
             </div>
             {% endif %}
 
-            <div>
+            <div >
                 <span class=" hello-msg navbar-brand pt-4 pb-4 ">Hello, {{request.user}}</span>
                 <span><a  class="hello-msg navbar-brand " href="{% url 'logout' %} ">Logout</a></span>
             </div>
