@@ -25,6 +25,9 @@ def create_profile(request):
 @login_required
 def view_profile(request):
 	profile = get_object_or_404(RecruiterProfile, user=request.user)
+	if "pic" in request.FILES and "sub" in request.POST:
+		profile.picture = request.FILES["pic"]
+		profile.save()
 	for i in Job.objects.all():
 		i.temp_maybe_list.clear()
 	jobs = Job.objects.filter(created_by=request.user)
