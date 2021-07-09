@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import MinValueValidator, MaxValueValidator, MinLengthValidator
 
 class UserProfile(AbstractUser):
 	is_recruiter = models.BooleanField(default=False)
@@ -41,11 +42,11 @@ class Skill(models.Model):
 class StudentProfile(models.Model):
 	user = models.OneToOneField(UserProfile, on_delete=models.CASCADE, primary_key=True)
 	created_at = models.DateTimeField(auto_now_add=True)
-	first_name = models.CharField(max_length=50)
-	last_name = models.CharField(max_length=50)
+	first_name = models.CharField(max_length=13, validators=[MinLengthValidator(2)])
+	last_name = models.CharField(max_length=13, validators=[MinLengthValidator(2)])
 
-	school = models.CharField(max_length=100)
-	graduation_year = models.IntegerField()
+	school = models.CharField(max_length=100, validators=[MinLengthValidator(2)])
+	graduation_year = models.IntegerField(validators=[MinValueValidator(2010), MaxValueValidator(2030)])
 	major = models.CharField(max_length=100)
 
 	picture = models.ImageField(upload_to="gallery", default="gallery/profile_pic_default.png", blank=True, null=True)
