@@ -16,23 +16,38 @@
         {% csrf_token %}
         <div class="form-group">
             <label>First Name</label>
-            <br> {{form.first_name}}
+            <div class="form-error-text">
+                {{form.first_name.errors}}
+            </div>
+            {{form.first_name}}
         </div>
         <div class="form-group">
             <label>Last Name</label>
-            <br> {{form.last_name}}
+            <div class="form-error-text">
+                {{form.last_name.errors}}
+            </div>
+            {{form.last_name}}
         </div>
         <div class="form-group">
             <label>School</label>
-            <br> {{form.school}}
+            <div class="form-error-text">
+                {{form.school.errors}}
+            </div>
+            {{form.school}}
         </div>
         <div class=" form-group ">
             <label>Graduation Year</label>
-            <br> {{form.graduation_year}}
+            <div class="form-error-text">
+                {{form.graduation_year.errors}}
+            </div>
+            {{form.graduation_year}}
         </div>
         <div class=" form-group ">
             <label>Major</label>
-            <br> {{form.major}}
+            <div class="form-error-text">
+                {{form.school.errors}}
+            </div>
+            {{form.major}}
         </div>
         <div class="form-group">
             <label>Profile Picture</label>
