@@ -14,15 +14,24 @@
         {% csrf_token %}
         <div class="form-group">
             <label>Title</label>
+            <div class="form-error-text">
+                {{form.title.errors}}
+            </div>
             <br> {{form.title}}
         </div>
         <div class="form-group">
             <label>Description</label>
+            <div class="form-error-text">
+                {{form.description.errors}}
+            </div>
             <br> {{form.description}}
         </div>
-
+        <!--move error under box-->
         <div class=" form-group ">
             <label>Location</label>
+            <div class="form-error-text">
+                {{form.location.errors}}
+            </div>
             <br> {{form.location}}
         </div>
 

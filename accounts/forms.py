@@ -2,6 +2,7 @@ from django import forms
 from .models import UserProfile, RecruiterProfile, StudentProfile, Experience, Project, Involvement
 from django.db import models, transaction
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.core.validators import MinLengthValidator
 
 class UserSignupForm(UserCreationForm):
 	class Meta:
@@ -19,11 +20,13 @@ class UserSignupForm(UserCreationForm):
 		error_messages={'required': 'Passwords must match.'})
 	is_recruiter= forms.CharField(label='Account type', widget=forms.Select(
 		choices=[(False, "Job seeker"), (True, "Employer")]))
-
+#need max length validator
+#rename required to get custom error message
 class UserLoginForm(AuthenticationForm):
 	class Meta:
 		model = UserProfile
 		fields = ['username', 'password']
+
 	username = forms.EmailField(max_length=255, 
 		widget=forms.TextInput(attrs={'placeholder':'Email'}),
 		error_messages={'required': 'Please enter a valid email address.'})
@@ -35,6 +38,16 @@ class RecruiterProfileForm(forms.ModelForm):
 	class Meta:
 		model = RecruiterProfile
 		fields = ['title', 'description', 'location', 'picture']
+
+	title = forms.CharField(max_length=150, validators=[MinLengthValidator(2)],
+		widget=forms.TextInput(attrs={'placeholder':'Title'}),
+		error_messages={'required':'Title must be atleast 2 characters but no more than 150 characters'})
+	description = forms.CharField(validators=[MinLengthValidator(2)],
+		widget=forms.TextInput(attrs={'placeholder':'Title'}),
+		error_messages={'required':'Description must be atleast 2 characters'})
+	location = forms.CharField(max_length=100, validators=[MinLengthValidator(2)],
+		widget=forms.TextInput(attrs={'placeholder':'Title'}),
+		error_messages={'required':'Location must be atleast 2 characters but no more than 100 characters'})
 
 class StudentProfileForm(forms.ModelForm):
 	class Meta:

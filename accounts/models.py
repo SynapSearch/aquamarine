@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import MinLengthValidator
 
 class UserProfile(AbstractUser):
 	is_recruiter = models.BooleanField(default=False)
@@ -9,9 +10,9 @@ class UserProfile(AbstractUser):
 class RecruiterProfile(models.Model):
 	# IMPORTANT - The related_name is what allows the HTML files to access this classes properties!!
 	user = models.OneToOneField(UserProfile, on_delete=models.CASCADE, primary_key=True)
-	title = models.CharField(max_length=150)
-	description = models.TextField()
-	location = models.CharField(max_length=150)
+	title = models.CharField(max_length=150, validators=[MinLengthValidator(2)])
+	description = models.TextField(validators=[MinLengthValidator(2)])
+	location = models.CharField(max_length=150, validators=[MinLengthValidator(2)])
 	picture = models.ImageField(upload_to="gallery", default="gallery/profile_pic_default.png", blank=True)
 
 	def __str__(self):
