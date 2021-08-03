@@ -3,6 +3,7 @@ from .models import UserProfile, RecruiterProfile, StudentProfile, Experience, P
 from django.db import models, transaction
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.core.validators import MinLengthValidator
+from django.core.validators import MaxLengthValidator
 
 class UserSignupForm(UserCreationForm):
 	class Meta:
@@ -20,8 +21,7 @@ class UserSignupForm(UserCreationForm):
 		error_messages={'required': 'Passwords must match.'})
 	is_recruiter= forms.CharField(label='Account type', widget=forms.Select(
 		choices=[(False, "Job seeker"), (True, "Employer")]))
-#need max length validator
-#rename required to get custom error message
+
 class UserLoginForm(AuthenticationForm):
 	class Meta:
 		model = UserProfile
@@ -39,14 +39,14 @@ class RecruiterProfileForm(forms.ModelForm):
 		model = RecruiterProfile
 		fields = ['title', 'description', 'location', 'picture']
 
-	title = forms.CharField(max_length=150, validators=[MinLengthValidator(2)],
-		widget=forms.TextInput(attrs={'placeholder':'Title'}),
+	title = forms.CharField(max_length=150, validators=[MaxLengthValidator(150), MinLengthValidator(2)],
+		widget=forms.TextInput(attrs={'required':'Title'}),
 		error_messages={'required':'Title must be atleast 2 characters but no more than 150 characters'})
-	description = forms.CharField(validators=[MinLengthValidator(2)],
-		widget=forms.TextInput(attrs={'placeholder':'Title'}),
+	description = forms.CharField(validators=[MaxLengthValidator(500), MinLengthValidator(2)],
+		widget=forms.TextInput(attrs={'required':'Title'}),
 		error_messages={'required':'Description must be atleast 2 characters'})
-	location = forms.CharField(max_length=100, validators=[MinLengthValidator(2)],
-		widget=forms.TextInput(attrs={'placeholder':'Title'}),
+	location = forms.CharField(validators=[MaxLengthValidator(100), MinLengthValidator(2)],
+		widget=forms.TextInput(attrs={'required':'Title'}),
 		error_messages={'required':'Location must be atleast 2 characters but no more than 100 characters'})
 
 class StudentProfileForm(forms.ModelForm):
