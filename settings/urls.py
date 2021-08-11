@@ -33,7 +33,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('accounts.urls')),
     path('job/create', create_jobs, name="createjob"),
-    path('job/edit/<int:pk>/', edit_jobs, name="editjob")
+    path('job/edit/<int:pk>/', edit_jobs, name="editjob"),
 
 ]
  
