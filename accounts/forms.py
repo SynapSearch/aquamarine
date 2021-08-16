@@ -1,5 +1,5 @@
 from django import forms
-from .models import UserProfile, RecruiterProfile, StudentProfile, Experience, Project, Involvement
+from .models import UserProfile, RecruiterProfile, StudentProfile, Experience, Project, Involvement, Skill
 from django.db import models, transaction
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.core.validators import MinLengthValidator
@@ -52,8 +52,7 @@ class RecruiterProfileForm(forms.ModelForm):
 class StudentProfileForm(forms.ModelForm):
 	class Meta:
 		model = StudentProfile
-		fields = ['first_name', 'last_name', 'school', 'graduation_year', 'major', 'picture']
-
+		fields = ['first_name', 'last_name', 'school', 'graduation_year', 'major', 'picture', "skills", "interests"]
 class ExperienceForm(forms.ModelForm):
 	class Meta: 
 		model = Experience

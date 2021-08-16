@@ -22,14 +22,14 @@
                     <h1 class="pt-3 "> {{profile.first_name}} {{profile.last_name}}</h1>
                     <h3>{{profile.school}} Class of {{profile.graduation_year}}</h3>
                     <h3> {{profile.major}} </h3>
-                    <div class="text-right px-3 ">
-                        <a href="{% url 's_edit_skills' %} "> Edit </a>
-                    </div>
+
                     <p class="pt-1 px-4 text-white text-left ">Skills</p>
 
                     <div class="container text-left px-4 ">
                         {% for s in profile.skills.all %}
-                        <li>{{s.get_name_display}} </li> {% endfor %}
+                        <li>{{ s }}</li>
+                        {% endfor %}
+
                     </div>
                     <p class="pt-1 px-4 text-white text-left ">Interests</p>
 

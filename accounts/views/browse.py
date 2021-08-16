@@ -18,9 +18,15 @@ def browse(request):
     job = job_array[0]
 
     if request.method == 'POST':
-        job.student_has_swiped.add(student)
         if request.POST['submit'] == 'accepted':
             job.students_who_swiped_yes.add(student)
+            job.student_has_swiped.add(student)
+        elif request.POST['submit'] == 'rejected':
+            job.student_has_swiped.add(student)
+        elif request.POST['submit'] == 'back':
+            temp_job = Job.objects.filter(student_has_swiped=student).last()
+            temp_job.student_has_swiped.remove(student)
+            temp_job.students_who_swiped_yes.remove(student)
         return redirect('browse')
 
     recruiter = RecruiterProfile.objects.get(user=job.created_by)
@@ -43,11 +49,19 @@ def r_browse(request, pk):
     student = student_array[0]
 
     if request.method == 'POST':
-        job.recruiter_has_swiped.add(student)
         if request.POST['submit'] == 'accepted':
+            job.recruiter_has_swiped.add(student)
             job.students_accepted_by_recruiter.add(student)
-        if request.POST['submit'] == 'maybe':
+        elif request.POST['submit'] == 'maybe':
             job.students_in_maybe_pile.add(student)
+            job.recruiter_has_swiped.add(student)
+        elif request.POST['submit'] == 'rejected':
+            job.recruiter_has_swiped.add(student)
+        elif request.POST['submit'] == 'back':
+            temp_student = job.recruiter_has_swiped.last()
+            job.recruiter_has_swiped.remove(temp_student)
+            job.students_in_maybe_pile.remove(temp_student)
+
         return redirect('r_browse', pk)
 
     exp = Experience.objects.filter(created_by=student.user)
@@ -79,10 +93,13 @@ def maybe_browse(request, pk):
         if request.POST['submit'] == 'accepted':
             job.students_accepted_by_recruiter.add(student)
             job.students_in_maybe_pile.remove(student)
-        if request.POST['submit'] == 'maybe':
+        elif request.POST['submit'] == 'maybe':
             job.temp_maybe_list.add(student)
-        if request.POST['submit'] == 'rejected':
+        elif request.POST['submit'] == 'rejected':
             job.students_in_maybe_pile.remove(student)
+        elif request.POST['submit'] == 'back':
+            temp_student = job.temp_maybe_list.last()
+            job.temp_maybe_list.remove(temp_student)
 
         return redirect('maybe_browse', pk)
 

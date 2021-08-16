@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views
+import tagulous.views
 
 from accounts.views.authentication import *
 from accounts.views.browse import home
@@ -32,7 +33,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('accounts.urls')),
     path('job/create', create_jobs, name="createjob"),
-    path('job/edit/<int:pk>/', edit_jobs, name="editjob")
+    path('job/edit/<int:pk>/', edit_jobs, name="editjob"),
 
 ]
  
