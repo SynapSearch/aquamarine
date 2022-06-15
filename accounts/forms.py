@@ -48,7 +48,7 @@ class ExperienceForm(forms.ModelForm):
 class ProjectForm(forms.ModelForm):
 	class Meta: 
 		model = Project
-		fields = ['title', 'company', 'dates', 'description']
+		fields = ['title', 'dates', 'description']
 
 
 class InvolvementForm(forms.ModelForm):

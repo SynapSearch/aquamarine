@@ -88,7 +88,6 @@ class Experience(models.Model):
 class Project(models.Model):
 	created_by = models.ForeignKey(UserProfile, related_name='project', on_delete=models.CASCADE)
 	title = models.CharField(max_length=100)
-	company = models.CharField(max_length=100)
 	dates = models.CharField(max_length=100)
 	description = models.TextField()
 
